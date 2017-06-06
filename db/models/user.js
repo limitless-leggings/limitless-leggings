@@ -1,8 +1,10 @@
 'use strict'
 
+
+
 // bcrypt docs: https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcryptjs')
-    , {STRING, VIRTUAL} = require('sequelize')
+    , {STRING, VIRTUAL,BOOLEAN} = require('sequelize')
 
 module.exports = db => db.define('users', {
   name: STRING,
@@ -13,6 +15,7 @@ module.exports = db => db.define('users', {
       notEmpty: true,
     }
   },
+  isAdmin: BOOLEAN,
 
   // We support oauth, so users may or may not have passwords.
   password_digest: STRING, // This column stores the hashed password in the DB, via the beforeCreate/beforeUpdate hooks
@@ -34,9 +37,10 @@ module.exports = db => db.define('users', {
   }
 })
 
-module.exports.associations = (User, {OAuth, Thing, Favorite}) => {
-  User.hasOne(OAuth)
-  User.belongsToMany(Thing, {as: 'favorites', through: Favorite})
+module.exports.associations = (User, {OAuth,CartItem,Order}) => {
+  User.hasOne(OAuth);
+  User.hasMany(CartItem);
+  User.hasMany(Order)
 }
 
 function setEmailAndPassword(user) {
