@@ -1,8 +1,6 @@
-# Hi, I'm bones
+# Limitless Leggings
 
-I'm a happy little skeleton. You can clone me to use as a starter on your projects!
-I have React, Redux, Sequelize, and Express all just rattling around in here ready
-to go.
+Still just a bones skeleton. But we're coming soon, with an AWESOME LEGGINGS SITE.
 
 ## I need node >= 6.7.0
 
