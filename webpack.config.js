@@ -13,7 +13,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
     , USE_FAST_SOURCE_MAPS = false
 
 module.exports = {
-  entry: './app/main.jsx',
+  entry: './app/app.jsx',
   output: {
     path: __dirname,
     filename: './public/bundle.js'
