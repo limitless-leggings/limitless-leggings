@@ -1,10 +1,8 @@
 'use strict'
 
-
-
 // bcrypt docs: https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcryptjs')
-    , {STRING, VIRTUAL,BOOLEAN} = require('sequelize')
+    , {STRING, VIRTUAL, BOOLEAN} = require('sequelize')
 
 module.exports = db => db.define('users', {
   name: STRING,
@@ -37,9 +35,9 @@ module.exports = db => db.define('users', {
   }
 })
 
-module.exports.associations = (User, {OAuth,CartItem,Order}) => {
-  User.hasOne(OAuth);
-  User.hasMany(CartItem);
+module.exports.associations = (User, {OAuth, CartItem, Order}) => {
+  User.hasOne(OAuth)
+  User.hasMany(CartItem)
   User.hasMany(Order)
 }
 
