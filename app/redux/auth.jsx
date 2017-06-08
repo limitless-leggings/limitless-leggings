@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+/* ------------       REDUCERS     ------------------ */
+
 const reducer = (state=null, action) => {
   switch (action.type) {
   case AUTHENTICATED:
@@ -8,10 +10,14 @@ const reducer = (state=null, action) => {
   return state
 }
 
+/* ------------       ACTIONS     ------------------ */
+
 const AUTHENTICATED = 'AUTHENTICATED'
 export const authenticated = user => ({
   type: AUTHENTICATED, user
 })
+
+/* ------------       DISPATCHERS     ------------------ */
 
 export const login = (username, password) =>
   dispatch =>

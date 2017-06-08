@@ -3,16 +3,19 @@
 const db = require('APP/db')
 const Category = db.model('categories')
 
-const {mustBeLoggedIn, forbidden} = require('./auth.filters')
+const {mustBeLoggedIn, forbidden, assertAdmin} = require('./auth.filters')
 
 module.exports = require('express').Router()
   .param('categoryId',
     (req, res, next, categoryId) => {
       if (!Number(categoryId)) {
-        res.sendStatus(500)
+        return next(err)
       } else {
         Category.findById(categoryId)
         .then(category => {
+          if (category) {
+            res.sendStatus(404)
+          }
           req.category = category
           next()
         })
@@ -20,25 +23,23 @@ module.exports = require('express').Router()
       }
     })
   .get('/',
-    (req, res, next) =>
+    (req, res, next) => {
       Category.findAll()
         .then(categories => res.json(categories))
-        .catch(next))
-  .post('/',
+        .catch(next)})
+  .post('/', assertAdmin,
     (req, res, next) =>
       Category.create(req.body)
       .then(category => res.status(201).json(category))
       .catch(next))
   .get('/:categoryId',
-    // mustBeLoggedIn,
     (req, res, next) => {
-      if (!req.category) res.sendStatus(404)
+      console.log("IN THE ROUTE! req.category: ", req.category)
       res.json(req.category)
     })
-  .put('/:categoryId',
-    // mustBeLoggedIn,
+  .put('/:categoryId', assertAdmin,
     (req, res, next) => {
-      if (!req.category) res.sendStatus(404)
+      // req.category.update -- KHLM
       Category.update(
         req.body,
         { where: { id: req.category.id }, returning: true })

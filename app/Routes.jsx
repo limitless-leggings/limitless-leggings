@@ -4,7 +4,7 @@ import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
 
-import store from './store'
+import store from './store' // don't need me -- KHLM
 import Root from './components/Root'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
@@ -35,7 +35,7 @@ const mapDispatch = dispatch => ({
   },
   onProductEnter: (nextRouterState) => {
     const productId = nextRouterState.params.productId
-    console.log('IN THE FETCHPRODUCT DATA! PRODUCTID: ', productId)
+    console.log('IN THE FETCHPRODUCT DATA! PRODUCTID: ', productId) // logs in master.. -- KHLM
     dispatch(fetchProductById(productId)) // dispatches specific reducer that does axios request w/ productId of clicked-on product
   }
 })

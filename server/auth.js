@@ -125,6 +125,8 @@ auth.get('/whoami', (req, res) => res.send(req.user))
 // POST requests for local login:
 auth.post('/login/local', passport.authenticate('local', {successRedirect: '/'}))
 
+// I recommend signup here. req.logIn for serializing user (given to us by passport) -- KHLM
+
 // GET requests for OAuth login:
 // Register this route as a callback URL with OAuth provider
 auth.get('/login/:strategy', (req, res, next) =>
