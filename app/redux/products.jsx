@@ -3,30 +3,30 @@ import axios from 'axios'
 /* -----------------    ACTIONS     ------------------ */
 
 const INITIALIZE = 'INITIALIZE_PRODUCTS'
-// const CREATE     = 'CREATE_STORY'; // name appropriately -- KHLM
+const CREATE = 'CREATE_PRODUCT'
 const SELECT = 'SELECT_PRODUCT'
-// const REMOVE     = 'REMOVE_STORY';
+const REMOVE = 'SELECT_STORY'
 
 /* ------------   ACTION CREATORS     ------------------ */
 
 const init = products => ({ type: INITIALIZE, products })
-// const create = story   => ({ type: CREATE, story }) // comment in and update to product -- KHLM
-// const remove = id      => ({ type: REMOVE, id }) // comment in -- KHLM
+const create = product => ({ type: CREATE, product })
+const remove = id => ({ type: REMOVE, id })
 const select = product => ({ type: SELECT, product })
 
 /* ------------       REDUCERS     ------------------ */
 
 const initialProductsState = {
-  selected: {}, // self documenting variables selectedProduct -- kHLM
-  list: [] // same as above, also make sure you are consistent; userList, orderList -- KHLM
+  selectedProduct: {},
+  productsList: []
 }
 
-export default function reducer(state = initialProductsState, action) {
+const reducer = (state = initialProductsState, action) => {
   const newState = Object.assign({}, state)
 
   switch (action.type) {
   case INITIALIZE: // consider this name moving forward with how you layout your site -- KHLM
-    newState.list = action.products
+    newState.productsList = action.products
     break
 
   // case CREATE:
@@ -39,7 +39,7 @@ export default function reducer(state = initialProductsState, action) {
   //   return stories.filter(story => story.author_id !== action.id);
 
   case SELECT:
-    newState.selected = action.product
+    newState.selectedProduct = action.product
     break
 
     // products.map(product => (
@@ -68,3 +68,5 @@ export const fetchProductById = (id) => dispatch => {
     .then(res => dispatch(select(res.data)))
     .catch(err => console.error('Fetching product unsuccessful', err))
 }
+
+export default reducer

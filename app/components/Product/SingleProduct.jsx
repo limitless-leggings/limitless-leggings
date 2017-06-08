@@ -16,8 +16,8 @@ const SingleProduct = ({selectedProduct}) => (
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapStateToProps = ({ products }) => ({ selectedProduct: products.selected }) // getting selectedProduct off of State and passing it into dumb part of component as props.selectedProduct
+const mapStateToProps = ({ products }) => ({ selectedProduct: products.selectedProduct }) // getting selectedProduct off of State and passing it into dumb part of component as props.selectedProduct
 
 // const mapDispatch = { fetchProductById } // taking the fetchProductById dispatcher from the redux file, and
 
-export default connect(mapStateToProps, null)(SingleProduct)
+export default connect(mapStateToProps)(SingleProduct)

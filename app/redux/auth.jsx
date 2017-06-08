@@ -1,21 +1,24 @@
 import axios from 'axios'
 
+/* ------------       ACTIONS     ------------------ */
+
+const AUTHENTICATED = 'AUTHENTICATED'
+
+/* ------------   ACTION CREATORS     ------------------ */
+
+export const authenticated = user => ({
+  type: AUTHENTICATED, user
+})
+
 /* ------------       REDUCERS     ------------------ */
 
-const reducer = (state=null, action) => {
+const reducer = (state = null, action) => {
   switch (action.type) {
   case AUTHENTICATED:
     return action.user
   }
   return state
 }
-
-/* ------------       ACTIONS     ------------------ */
-
-const AUTHENTICATED = 'AUTHENTICATED'
-export const authenticated = user => ({
-  type: AUTHENTICATED, user
-})
 
 /* ------------       DISPATCHERS     ------------------ */
 
