@@ -7,7 +7,7 @@ module.exports = db => db.define('cartItems', {
     allowNull: false
   },
   priceAtOrder: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.DECIMAL // consider (10,2), validation for positive -- KHLM
     // add a GETTER METHOD FOR THE PRICE
   }
 })

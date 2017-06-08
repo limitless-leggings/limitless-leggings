@@ -11,7 +11,7 @@ module.exports = db => db.define('products', {
     allowNull: true
   },
   price: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.INTEGER, // decimal, same validations as mentioned before -- KHLM
     allowNull: false
   },
   photoUrl: {
@@ -24,4 +24,5 @@ module.exports = db => db.define('products', {
 
 module.exports.associations = (Product, {Category}) => {
   Product.belongsTo(Category)
+  // product.hasMan(productItem) -- KHLM
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+// delete me eventually -- KHLM
 export default class BonesJokes extends Component {
   componentDidMount() {
     this.nextJoke()

@@ -5,9 +5,9 @@ import { fetchProductById } from '../../redux/products'
 
 /* -----------------    COMPONENT     ------------------ */
 
-class SingleProduct extends React.Component {
+class SingleProduct extends React.Component { // make me dumb too -- KHLM
   render() {
-    const selectedProduct = this.props.selected || { title: null }
+    const selectedProduct = this.props.selected // shouldn't need || -- KHLM
 
     return (
       <div>

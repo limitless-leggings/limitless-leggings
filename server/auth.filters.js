@@ -12,6 +12,8 @@ const selfOnly = action => (req, res, next) => {
   next()
 }
 
+// assertAdmin -- KHLM
+
 const forbidden = message => (req, res) => {
   res.status(403).send(message)
 }

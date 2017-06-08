@@ -1,7 +1,7 @@
 'use strict'
 const Sequelize = require('sequelize')
 
-module.exports = db => db.define('productItems', {
+module.exports = db => db.define('productItems', { // usually see single definition -- KHLM
   size: {
     type: Sequelize.ENUM('XS', 'S', 'M', 'L', 'XL'),
     allowNull: false

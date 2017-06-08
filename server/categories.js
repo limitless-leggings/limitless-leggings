@@ -9,10 +9,11 @@ module.exports = require('express').Router()
   .param('categoryId',
     (req, res, next, categoryId) => {
       if (!Number(categoryId)) {
-        res.sendStatus(500)
+        res.sendStatus(500) // error hanlding middleware -- KHLM
       } else {
         Category.findById(categoryId)
         .then(category => {
+          // what if no category -- KHLM
           req.category = category
           next()
         })
@@ -24,21 +25,22 @@ module.exports = require('express').Router()
       Category.findAll()
         .then(categories => res.json(categories))
         .catch(next))
-  .post('/',
+  .post('/', // who can create? -- KHLM
     (req, res, next) =>
       Category.create(req.body)
       .then(category => res.status(201).json(category))
       .catch(next))
   .get('/:categoryId',
-    // mustBeLoggedIn,
+    // mustBeLoggedIn, // delete me -- KHLM
     (req, res, next) => {
-      if (!req.category) res.sendStatus(404)
+      if (!req.category) res.sendStatus(404) // do in .param -- KHLM
       res.json(req.category)
     })
   .put('/:categoryId',
-    // mustBeLoggedIn,
+    // mustBeLoggedIn, // admin -- KHLM
     (req, res, next) => {
       if (!req.category) res.sendStatus(404)
+      // req.category.update -- KHLM
       Category.update(
         req.body,
         { where: { id: req.category.id }, returning: true })
