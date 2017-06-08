@@ -9,14 +9,14 @@ import {connect} from 'react-redux'
 class ProductList extends React.Component {
   render() {
     const {products} = this.props
-    console.log('props', this.props)
+
     return (
       <div>
         <h1>ProductList Page!</h1>
         <ul>
         {
-          products.map(product => {
-            return (<li key={product.id}>{product.title}</li>)
+          products.list.map(product => {
+            return (<li key={product.id}><Link to={`/products/${product.id}`}>{product.title}</Link></li>)
           })
         }
         </ul>

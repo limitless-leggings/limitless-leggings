@@ -2,24 +2,32 @@ import axios from 'axios'
 
 /* -----------------    ACTIONS     ------------------ */
 
-const INITIALIZE = 'INITIALIZE_STORIES'
+const INITIALIZE = 'INITIALIZE_PRODUCTS'
 // const CREATE     = 'CREATE_STORY';
-// const UPDATE     = 'UPDATE_STORY';
+const SELECT = 'SELECT_PRODUCT'
 // const REMOVE     = 'REMOVE_STORY';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
 const init = products => ({ type: INITIALIZE, products })
-// const create = story   => ({ type: CREATE, story });
-// const remove = id      => ({ type: REMOVE, id });
-// const update = story   => ({ type: UPDATE, story });
+// const create = story   => ({ type: CREATE, story })
+// const remove = id      => ({ type: REMOVE, id })
+const select = product => ({ type: SELECT, product })
 
 /* ------------       REDUCERS     ------------------ */
 
-export default function reducer(products = [], action) {
+const initialProductsState = {
+  selected: {},
+  list: []
+}
+
+export default function reducer(state = initialProductsState, action) {
+  const newState = Object.assign({}, state)
+
   switch (action.type) {
   case INITIALIZE:
-    return action.products
+    newState.list = action.products
+    break
 
   // case CREATE:
   //   return [action.story, ...stories];
@@ -30,20 +38,33 @@ export default function reducer(products = [], action) {
   // case REMOVE_USER:
   //   return stories.filter(story => story.author_id !== action.id);
 
-  // case UPDATE:
-  //   return stories.map(story => (
-  //     action.story.id === story.id ? action.story : story
-  //   ));
+  case SELECT:
+    newState.selected = action.product
+    break
+
+    // products.map(product => (
+    //   action.product.id === product.id ? action.selectedProduct : product
+    // ))
 
   default:
-    return products
+    return state
   }
+
+  return newState
 }
 
 /* ------------       DISPATCHERS     ------------------ */
 
+// axios request for ALL stories
 export const fetchProducts = () => dispatch => {
   axios.get('/api/products')
     .then(res => dispatch(init(res.data)))
     .catch(err => console.error('Fetching products unsuccessful', err))
+}
+
+// axios request for a single story
+export const fetchProductById = (id) => dispatch => {
+  axios.get(`/api/products/${id}`)
+    .then(res => dispatch(select(res.data)))
+    .catch(err => console.error('Fetching product unsuccessful', err))
 }
