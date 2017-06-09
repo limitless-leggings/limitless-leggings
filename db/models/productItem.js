@@ -15,6 +15,3 @@ module.exports = db => db.define('productItems', { // usually see single definit
 module.exports.associations = (ProductItem, {Product}) => {
   ProductItem.belongsTo(Product)
 }
-
-// module.exports.associations = (Thing, {User, Favorite}) => {
-// Thing.belongsToMany(User, {as: 'lovers', through: Favorite}) }

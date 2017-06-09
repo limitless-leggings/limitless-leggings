@@ -7,12 +7,14 @@ module.exports = db => db.define('orderItems', {
     allowNull: false
   },
   priceAtOrder: {
-    type: Sequelize.DECIMAL // consider (10,2), validation for positive -- KHLM
-    // add a GETTER METHOD FOR THE PRICE
+    type: Sequelize.DECIMAL(10, 2),
+    validate: {
+      min: 0
+    }
   }
 })
 
-// order assocations will be on the order model as order.hasmany orderiterms
+// Order assocations will be on the Order model as Order has many orderIterms
 module.exports.associations = (OrderItem, {Product}) => {
   OrderItem.belongsTo(Product)
 }

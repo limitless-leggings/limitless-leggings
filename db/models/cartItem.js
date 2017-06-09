@@ -8,7 +8,6 @@ module.exports = db => db.define('cartItems', {
   }
 })
 
-// user assocations will be on the user model as User.hasmany cartiterms // spelling -- KHLM
 module.exports.associations = (CartItem, {User, Product}) => {
   CartItem.belongsTo(Product)
   CartItem.belongsTo(User)
