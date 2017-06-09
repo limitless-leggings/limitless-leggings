@@ -12,7 +12,9 @@ function seedEverything() {
     }
   // if they have dependencies invoke below with seeded (order matters)
   seeded.cartItems = cartItems(seeded)
- 
+  seeded.orderItems = orderItems(seeded)
+  seeded.order = order(seeded)
+
   return Promise.props(seeded)
 }
 

@@ -1,11 +1,10 @@
 import React from 'react'
-import Login from './Login'
-import WhoAmI from './WhoAmI'
+import Navbar from './Navbar'
 
 const Root = ({ user, children }) => (
   <div>
     <nav>
-      {user ? <WhoAmI/> : <Login/>}
+      <Navbar />
     </nav>
     {children}
   </div>

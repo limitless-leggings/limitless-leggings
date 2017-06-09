@@ -37,7 +37,6 @@ const ProductList = ({productsList}) => (
 /* -----------------    CONTAINER     ------------------ */
 
 const mapStateToProps = ({ products }) => ({ productsList: products.productsList })
-// const mapStateToProps = ({ products }) => ({ products })
 
 // const mapDispatch = { // (for later, if we need to mapDispatch)
 //   addStory
