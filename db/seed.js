@@ -1,19 +1,19 @@
 'use strict'
 
 const db = require('APP/db')
-    , {User, Product, Category, CartItem, OrderItem, Order, Promise} = db
+    , {User, Product, Category, CartItem, Order, OrderItem, Promise} = db
     , {mapValues} = require('lodash')
 
 function seedEverything() {
   const seeded = { // add only seed items that don't have dependencies here
     users: users(),
     products: products(),
-    categories: categories(),
-    }
+    categories: categories()
+  }
   // if they have dependencies invoke below with seeded (order matters)
+  seeded.orders = orders(seeded)
   seeded.cartItems = cartItems(seeded)
   seeded.orderItems = orderItems(seeded)
-  seeded.order = order(seeded)
 
   return Promise.props(seeded)
 }
@@ -196,7 +196,6 @@ function seed(Model, rows) {
           )
         )
       )
-      .then(() => {})
       .then(seeded => {
         console.log(`Seeded ${Object.keys(seeded).length} ${Model.name} OK`)
         return seeded
@@ -206,4 +205,4 @@ function seed(Model, rows) {
   }
 }
 
-module.exports = Object.assign(seed, { users, products, categories, order, orderItems, cartItems })
+module.exports = Object.assign(seed, {users, products, cartItems, orders, orderItems, categories})
