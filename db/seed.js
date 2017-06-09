@@ -66,6 +66,30 @@ const categories = seed(Category, {
   }
 })
 
+const orders = seed(Order, ({users, products}) => ({
+  order1: {
+    product_id: products.galaxy.id,
+    user_id: users.barack.id
+  },
+  order2: {
+    product_id: products.snazzyworkout.id,
+    user_id: users.god.id
+  }
+}))
+
+const orderItems = seed(OrderItem, ({orders, products}) => ({
+  itemOne: {
+    quantity: 1,
+    product_id: products.galaxy.id,
+    order_id: orders.order1.id
+  },
+  itemTwo: {
+    quantity: 1,
+    product_id: products.snazzyworkout.id,
+    order_id: orders.order2.id
+  }
+}))
+
 // if there are dependencies, the second param is a function that takes in the seeded object, so that you can use any of the previously made instances
 const cartItems = seed(CartItem, ({users, products}) => ({
   item1: {
