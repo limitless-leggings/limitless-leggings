@@ -1,7 +1,7 @@
 ##QUESTIONS
 
 1) How do we find what port we're on??????
-2) In auth.filters.js (in server folder): are these filters <routes>?? Why are they 'req/res/next'? Why do they requier 'next' to move on? It's just a function being CALLED from a route, isn't it?....
+
 
 
 //NOTES FOR OAUTH SECRETS

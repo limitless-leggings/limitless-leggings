@@ -9,11 +9,15 @@ module.exports = require('express').Router()
   .param('productId',
     (req, res, next, productId) => {
       if (!Number(productId)) {
-        res.sendStatus(500) // same as before -- KHLM
+        const err = new Error('You tried accessing a product with an ID that is not a number. Product Id must be a number.')
+        err.status = 404
+        return next(err)
       } else {
         Product.findById(productId)
         .then(product => {
-          // same as before -- KHLM
+          if (!product) {
+            res.sendStatus(404)
+          }
           req.product = product
           next()
         })
@@ -32,18 +36,13 @@ module.exports = require('express').Router()
       .catch(next))
   .get('/:productId',
     (req, res, next) => {
-      if (!req.product) res.sendStatus(404) // in .param -- KHLM
       res.json(req.product)
     })
   .put('/:productId', assertAdmin,
     (req, res, next) => {
-      if (!req.product) res.sendStatus(404) // in .param -- KHLM
-      // req.product.update() -- KHLM
-      Product.update(
-        req.body,
-        { where: { id: req.product.id }, returning: true })
-      .spread((_, updatedProducts) => {
-        res.json(updatedProducts[0])
+      req.product.update(req.body)
+      .then(updatedCategory => {
+        res.json(updatedCategory)
       })
       .catch(next)
     })

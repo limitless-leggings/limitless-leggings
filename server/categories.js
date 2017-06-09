@@ -9,11 +9,13 @@ module.exports = require('express').Router()
   .param('categoryId',
     (req, res, next, categoryId) => {
       if (!Number(categoryId)) {
+        const err = new Error('You tried accessing a category with an ID that is not a number. Category Id must be a number.')
+        err.status = 404
         return next(err)
       } else {
         Category.findById(categoryId)
         .then(category => {
-          if (category) {
+          if (!category) {
             res.sendStatus(404)
           }
           req.category = category
@@ -34,17 +36,13 @@ module.exports = require('express').Router()
       .catch(next))
   .get('/:categoryId',
     (req, res, next) => {
-      console.log("IN THE ROUTE! req.category: ", req.category)
       res.json(req.category)
     })
   .put('/:categoryId', assertAdmin,
     (req, res, next) => {
-      // req.category.update -- KHLM
-      Category.update(
-        req.body,
-        { where: { id: req.category.id }, returning: true })
-      .spread((_, updatedCategories) => {
-        res.json(updatedCategories[0])
+      req.category.update(req.body)
+      .then(updatedCategory => {
+        res.json(updatedCategory)
       })
       .catch(next)
     })
