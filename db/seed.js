@@ -1,14 +1,15 @@
 'use strict'
 
 const db = require('APP/db')
-    , {User, Product, Category, Promise} = db
+    , {User, Product, Category, CartItem, Promise} = db
     , {mapValues} = require('lodash')
 
 function seedEverything() {
   const seeded = {
     users: users(),
     products: products(),
-    categories: categories()
+    categories: categories(),
+    cartItems: cartItems()
   }
 
   // seeded.favorites = favorites(seeded)
@@ -62,6 +63,20 @@ const categories = seed(Category, {
   basic: {
     title: 'basic'
   }
+})
+
+const cartItems = seed(CartItem, {
+  item1: {
+    quantity: 2,
+    product_id: 1,
+    userId: 1
+  }
+  // },
+  // item2: {
+  //   quantity: 3,
+  //   product_id: 1,
+  //   userId: 2
+  // }
 })
 
 // const favorites = seed(Favorite,

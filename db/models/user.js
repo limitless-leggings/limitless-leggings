@@ -37,7 +37,7 @@ module.exports = db => db.define('users', {
 
 module.exports.associations = (User, {OAuth, CartItem, Order}) => {
   User.hasOne(OAuth)
-  User.hasMany(CartItem)
+  User.hasMany(CartItem, {foreignKey: 'userId'})
   User.hasMany(Order)
   // think about reviews  -- KHCL
 }

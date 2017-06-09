@@ -8,6 +8,7 @@ import Root from './components/Root'
 import ProductList from './components/Product/ProductList'
 import SingleProduct from './components/Product/SingleProduct'
 import NotFound from './components/NotFound'
+import Cart from './components/Cart'
 
 import { fetchProducts, fetchProductById } from './redux/products'
 
@@ -17,6 +18,7 @@ const Routes = ({fetchInitialData, onProductEnter}) => (
       <IndexRedirect to="/products" />
       <Route path="/products" component={ProductList} />
       <Route path="/products/:productId" component={SingleProduct} onEnter={onProductEnter} />
+      <Route path="/cart" component={Cart}/>
     </Route>
     <Route path='*' component={NotFound} />
   </Router>
