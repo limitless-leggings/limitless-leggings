@@ -5,14 +5,13 @@ const db = require('APP/db')
     , {mapValues} = require('lodash')
 
 function seedEverything() {
-  const seeded = {
+  const seeded = { // add only seed items that don't have dependencies here
     users: users(),
     products: products(),
-    categories: categories(),
-    cartItems: cartItems()
+    categories: categories()
   }
-
-  // seeded.favorites = favorites(seeded)
+  // if they have dependencies invoke below with seeded (order matters)
+  seeded.cartItems = cartItems(seeded)
 
   return Promise.props(seeded)
 }
@@ -36,19 +35,19 @@ const products = seed(Product, {
   galaxy: {
     title: 'galaxy',
     description: 'These are great galaxy leggings',
-    price: 100,
+    price: 100.02,
     photoUrl: 'http://lorempixel.com/300/300/'
   },
   snazzyworkout: {
     title: 'snazzyworkout',
     description: 'These are great snazzy workout leggings',
-    price: 35,
+    price: 35.45,
     photoUrl: 'http://lorempixel.com/300/300/'
   },
   plainblack: {
     title: 'plainblack',
     description: 'These are great puppy leggings',
-    price: 20,
+    price: 19.99,
     photoUrl: 'http://lorempixel.com/300/300/'
   }
 })
@@ -65,19 +64,19 @@ const categories = seed(Category, {
   }
 })
 
-const cartItems = seed(CartItem, {
+// if there are dependencies, the second param is a function that takes in the seeded object, so that you can use any of the previously made instances
+const cartItems = seed(CartItem, ({users, products}) => ({
   item1: {
     quantity: 2,
-    product_id: 1,
-    userId: 1
+    product_id: products.galaxy.id,
+    user_id: users.god.id // we can only say `user` if cartItems has an association to user
+  },
+  item2: {
+    quantity: 3,
+    product_id: products.snazzyworkout.id,
+    user_id: users.god.id
   }
-  // },
-  // item2: {
-  //   quantity: 3,
-  //   product_id: 1,
-  //   userId: 2
-  // }
-})
+}))
 
 // const favorites = seed(Favorite,
 //   // We're specifying a function here, rather than just a rows object.

@@ -42,8 +42,8 @@ export default function reducer(cartItems = [], action) {
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const fetchProducts = () => dispatch => {
-  axios.get('/api/cartItems')
+export const fetchCartItems = () => dispatch => {
+  axios.get('/api/cart')
     .then(res => dispatch(init(res.data)))
     .catch(err => console.error('Fetching cartItems unsuccessful', err))
 }

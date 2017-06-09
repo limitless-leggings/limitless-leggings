@@ -4,11 +4,13 @@ import { Link } from 'react-router'
 
 /* -----------------    COMPONENT     ------------------ */
 
-const Cart = ({ cartItems }) => {
+const Cart = ({ cart }) => {
   const calculateTotal = () => {
-    return cartItems.reduce((acc, item) => {
-      return acc + item.price
+    return cart.reduce((acc, item) => {
+      console.log('item.product', item.product)
+      return acc + item.product.price
     }, 0)
+    .toFixed(2)
   }
 
   return (
@@ -16,40 +18,35 @@ const Cart = ({ cartItems }) => {
       <table className="table table-condensed">
         <thead>
           <tr className="cart_menu">
-            <td className="description"></td>
+            <td className="description">Products</td>
             <td className="price">Price</td>
             <td className="quantity">Quantity</td>
-            <td className="total">Total</td>
             <td></td>
           </tr>
         </thead>
         <tbody>
-          <div>
-            {
-              cartItems.map(product => {
-                return (
-                  <tr>
-                    <td className="cart_description">
-                      <h4><a href="">{product.title}</a></h4>
-                    </td>
-                    <td className="cart_price">
-                      <p>{product.price}</p>
-                    </td>
-                    <td className="cart_total">
-                      <p className="cart_total_price">{product.price}</p>
-                    </td>
-
-                  </tr>)
-              })
-            }
-          </div>
+          {
+            cart.map(cartItem => {
+              return (
+                <tr key={cartItem.id}>
+                  <td className="cart_description">
+                    <h4><a href="">{cartItem.product.title}</a></h4>
+                  </td>
+                  <td className="cart_price">
+                    <p>{cartItem.product.price}</p>
+                  </td>
+                  <td className="cart_price">
+                    <p>{cartItem.quantity}</p>
+                  </td>
+                </tr>)
+            })
+          }
         </tbody>
       </table>
 
-      <button className="btn btn-xs btn-danger remove  btn-circle">Check Out</button>
       <br></br>
-      <span>Total Product Price</span>
-      <span className='text-right ng-binding'>`$ ${calculateTotal}`</span>
+      <span>Total Product Price: </span>
+      <span className='text-right ng-binding'>${calculateTotal()}</span>
        <br></br>
       <button><Link to="/">Checkout</Link></button>
     </div>
@@ -58,5 +55,5 @@ const Cart = ({ cartItems }) => {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ cartItems }) => ({ cartItems })
+const mapState = ({ cart }) => ({ cart })
 export default connect(mapState)(Cart)

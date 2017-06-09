@@ -3,12 +3,17 @@
 const db = require('APP/db')
 const User = db.model('users')
 const CartItem = db.model('cartItems')
+const Product = db.model('products')
 
 // const {mustBeLoggedIn, forbidden} = require('./auth.filters')
 
 module.exports = require('express').Router()
   .get('/', (req, res, next) => {
-    CartItem.findAll()
+    CartItem.findAll({
+      include: [{
+        model: Product
+      }]
+    })
       .then((products) => res.status(201).json(products))
       .catch(next)
   })

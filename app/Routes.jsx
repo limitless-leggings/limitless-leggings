@@ -11,14 +11,15 @@ import NotFound from './components/NotFound'
 import Cart from './components/Cart'
 
 import { fetchProducts, fetchProductById } from './redux/products'
+import {fetchCartItems} from './redux/cartItems'
 
-const Routes = ({fetchInitialData, onProductEnter}) => (
+const Routes = ({fetchInitialData, onCartEnter, onProductEnter}) => (
   <Router history={browserHistory}>
     <Route path="/" component={Root} onEnter={fetchInitialData}>
       <IndexRedirect to="/products" />
       <Route path="/products" component={ProductList} />
       <Route path="/products/:productId" component={SingleProduct} onEnter={onProductEnter} />
-      <Route path="/cart" component={Cart}/>
+      <Route path="/cart" component={Cart} onEnter={onCartEnter}/>
     </Route>
     <Route path='*' component={NotFound} />
   </Router>
@@ -35,6 +36,9 @@ const mapDispatch = dispatch => ({
   onProductEnter: (nextRouterState) => {
     const productId = nextRouterState.params.productId
     dispatch(fetchProductById(productId)) // dispatches specific reducer that does axios request w/ productId of clicked-on product
+  },
+  onCartEnter: () => {
+    dispatch(fetchCartItems())
   }
 })
 
