@@ -8,27 +8,30 @@ import Sidebar from '../Sidebar'
 /* -----------------    COMPONENT     ------------------ */
 
 const ProductList = ({productsList}) => (
-  <div>
-    <h1>ProductList Page!</h1>
-    <div className="row">
-    {
-      productsList.map(product => {
-        console.log("product: ", product)
-        return (
-          <div key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <img src={product.photoUrl} />
-              <div className="caption">
-                <h5>
-                  <span>{product.title}</span>
-                </h5>
-              </div>
-            </Link>
-          </div>)
-      })
-    }
+  <div id="main">
+    <div className="col-xs-2">
+      <Sidebar />
     </div>
+      <div className="col-xs-10">
+          {
+            productsList.map(product => {
+              console.log("product: ", product)
+              return (
+                <div key={product.id}>
+                  <Link to={`/products/${product.id}`}>
+                    <img src={product.photoUrl} />
+                    <div className="caption">
+                      <h5>
+                        <span>{product.title}</span>
+                      </h5>
+                    </div>
+                  </Link>
+                </div>)
+            })
+          }
+          </div>
   </div>
+
 )
 
 /* -----------------    CONTAINER     ------------------ */
