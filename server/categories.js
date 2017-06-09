@@ -28,7 +28,8 @@ module.exports = require('express').Router()
     (req, res, next) => {
       Category.findAll()
         .then(categories => res.json(categories))
-        .catch(next)})
+        .catch(next)
+    })
   .post('/', assertAdmin,
     (req, res, next) =>
       Category.create(req.body)

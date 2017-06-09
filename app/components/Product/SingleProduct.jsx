@@ -8,9 +8,12 @@ import { fetchProductById } from '../../redux/products'
 /* -----------------    COMPONENT     ------------------ */
 
 const SingleProduct = ({selectedProduct}) => (
-  <div>
-    <h1>This is the single-product page!</h1>
-    <h2>Current product selected: { selectedProduct.title }</h2>
+
+  <div className="singleProduct">
+    <div>
+      <h3>{ selectedProduct.title }</h3>
+      <img src={ selectedProduct.photoUrl } className="img-thumbnail"/>
+    </div>
   </div>
 )
 

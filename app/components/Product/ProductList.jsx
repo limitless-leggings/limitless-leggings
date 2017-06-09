@@ -8,14 +8,24 @@ import {connect} from 'react-redux'
 const ProductList = ({productsList}) => (
   <div>
     <h1>ProductList Page!</h1>
-    <ul>
+    <div className="row">
     {
       productsList.map(product => {
-        return (<li key={product.id}><Link to={`/products/${product.id}`}>{product.title}
-      {/* eventually add image because cool -- KHLM */}</Link></li>)
+        console.log("product: ", product)
+        return (
+          <div key={product.id}>
+            <Link to={`/products/${product.id}`}>
+              <img src={product.photoUrl} />
+              <div className="caption">
+                <h5>
+                  <span>{product.title}</span>
+                </h5>
+              </div>
+            </Link>
+          </div>)
       })
     }
-    </ul>
+    </div>
   </div>
 )
 

@@ -23,7 +23,7 @@ const assertAdmin = (req, res, next) => {
       }
       next()
     })
-    .catch(next);
+    .catch(next)
 }
 
 const selfOrAdmin = (req, res, next) => {
