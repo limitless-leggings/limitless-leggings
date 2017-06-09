@@ -1,6 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
+
+import Sidebar from '../Sidebar'
 // import SingleProduct from './SingleProduct' import { addStory } from // (this is for importing other components into this one)
 // '../../redux/stories'
 /* -----------------    COMPONENT     ------------------ */

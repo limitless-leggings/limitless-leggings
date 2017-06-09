@@ -9,8 +9,10 @@ import ProductList from './components/Product/ProductList'
 import SingleProduct from './components/Product/SingleProduct'
 import NotFound from './components/NotFound'
 import Cart from './components/Cart'
+import Sidebar from './components/Sidebar'
 
 import { fetchProducts, fetchProductById } from './redux/products'
+import { fetchCategories } from './redux/categories'
 import {fetchCartItems} from './redux/cartItems'
 
 const Routes = ({fetchInitialData, onCartEnter, onProductEnter}) => (
@@ -32,6 +34,7 @@ const mapProps = null
 const mapDispatch = dispatch => ({
   fetchInitialData: () => {
     dispatch(fetchProducts())
+    dispatch(fetchCategories())
   },
   onProductEnter: (nextRouterState) => {
     const productId = nextRouterState.params.productId
