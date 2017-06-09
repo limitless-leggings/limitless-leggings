@@ -2,14 +2,16 @@ import axios from 'axios'
 
 /* -----------------    ACTIONS     ------------------ */
 
-const INITIALIZE = 'INITIALIZE_PRODUCTS'
+// const INITIALIZE = 'INITIALIZE_PRODUCTS'
+const FILTER = 'FILTER_PRODUCTS'
 const CREATE = 'CREATE_PRODUCT'
 const SELECT = 'SELECT_PRODUCT'
 const REMOVE = 'SELECT_STORY'
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const init = products => ({ type: INITIALIZE, products })
+const filter = products => ({ type: FILTER, products })
+// const init = products => ({ type: INITIALIZE, products })
 const create = product => ({ type: CREATE, product })
 const remove = id => ({ type: REMOVE, id })
 const select = product => ({ type: SELECT, product })
@@ -25,7 +27,7 @@ const reducer = (state = initialProductsState, action) => {
   const newState = Object.assign({}, state)
 
   switch (action.type) {
-  case INITIALIZE: // consider this name moving forward with how you layout your site -- KHLM
+  case FILTER: // consider this name moving forward with how you layout your site -- KHLM
     newState.productsList = action.products
     break
 
@@ -58,7 +60,7 @@ const reducer = (state = initialProductsState, action) => {
 // axios request for ALL stories
 export const fetchProducts = () => dispatch => {
   axios.get('/api/products')
-    .then(res => dispatch(init(res.data)))
+    .then(res => dispatch(filter(res.data)))
     .catch(err => console.error('Fetching products unsuccessful', err)) // fine for now, show the user that something went wrong. Maybe refer to juke forms; maybe look into growls -- KHLM
 }
 
@@ -67,6 +69,12 @@ export const fetchProductById = (id) => dispatch => {
   axios.get(`/api/products/${id}`)
     .then(res => dispatch(select(res.data)))
     .catch(err => console.error('Fetching product unsuccessful', err))
+}
+
+export const fetchProductsByCategoryId = (categoryId) => (dispatch) => {
+  axios.get(`/api/products/category/${categoryId}`)
+    .then(res => dispatch(filter(res.data)))
+    .catch(err => console.error('Fetching products by category ID unsuccessful', err))
 }
 
 export default reducer

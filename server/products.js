@@ -24,6 +24,25 @@ module.exports = require('express').Router()
         .catch(next)
       }
     })
+  .param('categoryId',
+    (req, res, next, categoryId) => {
+      if (!Number(categoryId)) {
+        const err = new Error('You tried accessing a category with an ID that is not a number. Category ID must be a number.')
+        err.status = 404
+        return next(err)
+      } else {
+        Product.findAll({
+          where: {
+            category_id: categoryId
+          }
+        })
+        .then(products => {
+          req.productsByCategory = products
+          next()
+        })
+        .catch(next)
+      }
+    })
   .get('/',
     (req, res, next) =>
       Product.findAll()
@@ -45,4 +64,8 @@ module.exports = require('express').Router()
         res.json(updatedCategory)
       })
       .catch(next)
+    })
+  .get('/category/:categoryId',
+    (req, res, next) => {
+      res.json(req.productsByCategory)
     })

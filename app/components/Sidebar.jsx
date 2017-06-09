@@ -16,7 +16,7 @@ const Sidebar = ({categoryList}) => {
           categoryList.map(category => {
             return (
               <li key={category.id}>
-                <Link to={`/products/${category.id}`}>{category.title}</Link>
+                <Link to={`/categories/${category.id}`}>{category.title}</Link>
               </li>
             )
           })
