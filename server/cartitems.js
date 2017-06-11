@@ -48,3 +48,17 @@ module.exports = require('express').Router()
       res.status(201).send(user)
     })
     .catch(next))
+
+  // .put('/decrease/:productId', (req, res, next) => {
+  //   CartItem.findOne({
+  //     where: {
+  //       product_id: req.params.productId
+  //     }
+  //   })
+  //   .then((cartItem) => {
+  //     cartItem.update({
+  //       quantity: this.quantity - 1
+  //     })
+  //   })
+  //   .catch(next)
+  // )

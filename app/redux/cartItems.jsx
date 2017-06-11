@@ -3,8 +3,8 @@ import axios from 'axios'
 /* -----------------    ACTIONS     ------------------ */
 
 const INITIALIZE = 'INITIALIZE_CARTITEMS'
-// const CREATE     = 'CREATE_STORY';
-// const UPDATE     = 'UPDATE_STORY';
+const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
+const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
 // const REMOVE     = 'REMOVE_STORY';
 
 /* ------------   ACTION CREATORS     ------------------ */
@@ -21,11 +21,11 @@ export default function reducer(cartItems = [], action) {
   case INITIALIZE:
     return action.cartItems
 
-  // case CREATE:
-  //   return [action.story, ...stories];
+  case INCREASE_QUANTITY:
+    return //
 
-  // case REMOVE:
-  //   return stories.filter(story => story.id !== action.id);
+  case DECREASE_QUANTITY:
+    return //
 
   // case REMOVE_USER:
   //   return stories.filter(story => story.author_id !== action.id);
@@ -46,4 +46,8 @@ export const fetchCartItems = () => dispatch => {
   axios.get('/api/cart')
     .then(res => dispatch(init(res.data)))
     .catch(err => console.error('Fetching cartItems unsuccessful', err))
+}
+
+export const increaseQty = () => dispatch => {
+  axios.update()
 }
