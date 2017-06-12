@@ -10,7 +10,6 @@ import WhoAmI from './WhoAmI'
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    console.log("WHAT ARE PROPS? PROPS IN NAVBAR: ", props)
   }
 
   render() {

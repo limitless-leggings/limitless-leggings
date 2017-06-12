@@ -15,7 +15,6 @@ const ProductList = ({productsList}) => (
       <div className="col-xs-10">
           {
             productsList.map(product => {
-              console.log("product: ", product)
               return (
                 <div key={product.id}>
                   <Link to={`/products/${product.id}`}>

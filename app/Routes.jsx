@@ -9,13 +9,14 @@ import ProductList from './components/Product/ProductList'
 import SingleProduct from './components/Product/SingleProduct'
 import NotFound from './components/NotFound'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 import Sidebar from './components/Sidebar'
 
 import { fetchProducts, fetchProductById, fetchProductsByCategoryId } from './redux/products'
 import { fetchCategories } from './redux/categories'
 import { fetchCartItems } from './redux/cartItems'
 
-const Routes = ({fetchInitialData, onCartEnter, onProductEnter, onCategoryEnter}) => (
+const Routes = ({fetchInitialData, onCartEnter, onProductEnter, onCategoryEnter, onCheckoutEnter}) => (
   <Router history={browserHistory}>
     <Route path="/" component={Root} onEnter={fetchInitialData}>
       <IndexRedirect to="/products" />
@@ -23,6 +24,7 @@ const Routes = ({fetchInitialData, onCartEnter, onProductEnter, onCategoryEnter}
       <Route path="/categories/:categoryId" component={ProductList} onEnter={onCategoryEnter} />
       <Route path="/products/:productId" component={SingleProduct} onEnter={onProductEnter} />
       <Route path="/cart" component={Cart} onEnter={onCartEnter}/>
+      <Route path="/checkout" component={Checkout} onEnter={onCartEnter} />
     </Route>
     <Route path='*' component={NotFound} />
   </Router>
@@ -47,7 +49,10 @@ const mapDispatch = dispatch => ({
   },
   onCartEnter: () => {
     dispatch(fetchCartItems())
-  }
+  },
+  // onCheckoutEnter: () => {
+
+  // }
 })
 
 export default connect(mapProps, mapDispatch)(Routes)
