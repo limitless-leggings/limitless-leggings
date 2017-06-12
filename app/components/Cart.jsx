@@ -1,21 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { UPDATE_QUANTITY } from '../redux/cartItems'
+import { updateQty } from '../redux/cartItems'
 
 /* -----------------    COMPONENT     ------------------ */
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    const temp = {}
-    this.props.cart.map(cartItem => {
-      temp[cartItem.id] = cartItem.quantity
-    })
 
-    this.state = temp
+    this.state = {
+      cartItems: {}
+    }
+    // set total price as part of the state
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleSbumit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   calculateTotal() {
@@ -27,6 +26,7 @@ class Cart extends React.Component {
 
   render() {
     const { cart } = this.props
+    console.log('~!~!~!~CART', cart)
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -34,52 +34,44 @@ class Cart extends React.Component {
             cart.map(cartItem => {
               const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
               return (
-                <row key={cartItem.id}>
+                <div className="form-inline" key={cartItem.id}>
                   <h4><a href="">{cartItem.product.title}</a></h4>
                   <p>$ {cartItem.product.price}</p>
-                  <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value= {this.state[cartItem.id]}></input>
-                  <button type='submit' value='submit' className="btn btn-info btn-sm">update</button>
-                </row>
+                  <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input>
+                </div>
               )
             })
           }
+          <button type='submit' value='submit' className="btn btn-info btn-sm">Update Cart</button>
         </form>
         <br></br>
         <span>Total Product Price: </span>
         <span className='text-right ng-binding'>${this.calculateTotal()}</span>
         <br></br>
-        <button className="btn btn-info btn-sm"><Link to="/">Checkout</Link></button>
+        <button><Link to="/">Checkout</Link></button>
       </div>
     )
   }
 
   handleChange(itemIndex, event) {
-    console.log('change event target!!!', event.target.value)
-    const temp = Object.assign({}, this.state)
+    const temp = Object.assign({}, this.state.cartItems)
     temp[itemIndex] = Number(event.target.value)
-    console.log('temp', temp)
-    this.setState(temp, () => console.log('state changed', this.state)
-    )
+    console.log('temppp', temp)
+    this.setState({cartItems: temp}, () => { console.log('hello') })
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    // console.log('submit target!!!', event.target)
-    // this.props.increase()
+    const updatedValues = this.state.cartItems
+    this.props.updateQty(updatedValues)
   }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
 const mapStateToProps = ({ cart }) => ({ cart })
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increase: (item) => {
-      dispatch({
-        type: UPDATE_QUANTITY
-      })
-    }
-  }
-}
+
+const mapDispatchToProps ={updateQty}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

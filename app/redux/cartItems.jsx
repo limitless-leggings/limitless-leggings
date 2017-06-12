@@ -3,13 +3,13 @@ import axios from 'axios'
 /* -----------------    ACTIONS     ------------------ */
 
 const INITIALIZE = 'INITIALIZE_CARTITEMS'
-const UPDATE_QUANTITY = 'INCREASE_QUANTITY'
+const UPDATE = 'UPDATE_QUANTITY'
 // const REMOVE     = 'REMOVE_STORY';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
 const init = cartItems => ({ type: INITIALIZE, cartItems })
-// const create = story   => ({ type: CREATE, story });
+const update = updatedValues => ({ type: UPDATE, updatedValues })
 // const remove = id      => ({ type: REMOVE, id });
 // const update = story   => ({ type: UPDATE, story });
 
@@ -20,16 +20,19 @@ export default function reducer(cartItems = [], action) {
   case INITIALIZE:
     return action.cartItems
 
-  case UPDATE_QUANTITY:
-    return //
-
-  // case REMOVE_USER:
-  //   return stories.filter(story => story.author_id !== action.id);
-
   // case UPDATE:
-  //   return stories.map(story => (
-  //     action.story.id === story.id ? action.story : story
-  //   ));
+  //   console.log('~!~!~!~!CART ITEMS', action.updatedValues)
+  //   return Object.assign({}, action.updatedValues)
+      // return cartItems.map(cartitem => (
+      //   action.cartItems.id === .id ? action.story :
+      // ))
+
+    // case REMOVE_USER:
+    //   return stories.filter(story => story.author_id !== action.id);
+
+    //   return stories.map(story => (
+    //     action.story.id === story.id ? action.story : story
+    //   ));
 
   default:
     return cartItems
@@ -39,11 +42,25 @@ export default function reducer(cartItems = [], action) {
 /* ------------       DISPATCHERS     ------------------ */
 
 export const fetchCartItems = () => dispatch => {
-  axios.get('/api/cart')
-    .then(res => dispatch(init(res.data)))
+  return axios.get('/api/cart')
+    .then(res => {
+      return dispatch(init(res.data))
+    })
     .catch(err => console.error('Fetching cartItems unsuccessful', err))
 }
 
-export const updateQty = () => dispatch => {
-  axios.put('/api/cartItems/')
+export const updateQty = (updatedValues) => dispatch => {
+  console.log('updatedValue', updatedValues)
+  const promisesArr= []
+  for (var key in updatedValues) {
+    const temp = {}
+    temp.id = Number(key)
+    temp.quantity = updatedValues[key]
+    promisesArr.push(axios.put(`/api/cart/${key}`, temp))
+  }
+  Promise.all(promisesArr)
+  .then(res => {
+    return dispatch(fetchCartItems())
+  })
+    .catch(err => console.error('Update cartItems unsuccessful', err))
 }
