@@ -1,14 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { INCREASE_QUANTITY, DECREASE_QUANTITY } from '../redux/cartItems'
+import { UPDATE_QUANTITY } from '../redux/cartItems'
 
 /* -----------------    COMPONENT     ------------------ */
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    this.onClickDecrease = this.onClickDecrease.bind(this)
-    this.onClickIncrease = this.onClickIncrease.bind(this)
+    const temp = {}
+    this.props.cart.map(cartItem => {
+      temp[cartItem.id] = cartItem.quantity
+    })
+
+    this.state = temp
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSbumit = this.handleSubmit.bind(this)
   }
 
   calculateTotal() {
@@ -21,65 +28,44 @@ class Cart extends React.Component {
   render() {
     const { cart } = this.props
     return (
-      <div className="table-responsive cart_info">
-        <table className="table table-condensed">
-          <thead>
-            <tr className="cart_menu">
-              <td className="description">Products</td>
-              <td className="price">Price</td>
-              <td className="quantity">Quantity</td>
-              <td className="increase_button"></td>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              cart.map(cartItem => {
-                return (
-                    <tr key={cartItem.id}>
-                      <td className="cart_description">
-                        <h4><a href="">{cartItem.product.title}</a></h4>
-                      </td>
-                      <td className="cart_price">
-                        <p>{cartItem.product.price}</p>
-                      </td>
-                      {/*<td className="cart_qty_decrease">
-                        <button key={cartItem.id} onClick={this.onClickDecrease}>-</button>
-                      </td>*/}
-                      <td className="cart_quantity">
-                        <form onClick={this.onClickDecrease}>
-                        <p> <button >-</button>
-                        {cartItem.quantity}
-                        <button >+</button></p>
-                        </form>
-                      </td>
-                      {/*<td className="cart_qty_increase">
-                        <button onClick={this.onClickIncrease} >+</button>
-                      </td>*/}
-                    </tr>
-                )
-              })
-            }
-          </tbody>
-        </table>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          {
+            cart.map(cartItem => {
+              const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
+              return (
+                <row key={cartItem.id}>
+                  <h4><a href="">{cartItem.product.title}</a></h4>
+                  <p>$ {cartItem.product.price}</p>
+                  <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value= {this.state[cartItem.id]}></input>
+                  <button type='submit' value='submit' className="btn btn-info btn-sm">update</button>
+                </row>
+              )
+            })
+          }
+        </form>
         <br></br>
         <span>Total Product Price: </span>
         <span className='text-right ng-binding'>${this.calculateTotal()}</span>
         <br></br>
-        <button type="button" className="btn btn-success" ><Link to="/">Checkout</Link></button>
+        <button className="btn btn-info btn-sm"><Link to="/">Checkout</Link></button>
       </div>
     )
   }
 
-  onClickDecrease(event) {
-    event.preventDefault()
-    console.log('decrease button!!!', event.target)
-    // this.props.increase()
+  handleChange(itemIndex, event) {
+    console.log('change event target!!!', event.target.value)
+    const temp = Object.assign({}, this.state)
+    temp[itemIndex] = Number(event.target.value)
+    console.log('temp', temp)
+    this.setState(temp, () => console.log('state changed', this.state)
+    )
   }
 
-  onClickIncrease(event) {
+  handleSubmit(event) {
     event.preventDefault()
-    console.log('increase button!!!', event.target)
-    // this.props.decrease()
+    // console.log('submit target!!!', event.target)
+    // this.props.increase()
   }
 }
 
@@ -90,12 +76,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     increase: (item) => {
       dispatch({
-        type: INCREASE_QUANTITY
-      })
-    },
-    decrease: (item) => {
-      dispatch({
-        type: DECREASE_QUANTITY
+        type: UPDATE_QUANTITY
       })
     }
   }
