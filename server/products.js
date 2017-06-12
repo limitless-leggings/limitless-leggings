@@ -2,6 +2,7 @@
 
 const db = require('APP/db')
 const Product = db.model('products')
+const ProductItem = db.model('productItems')
 
 const {mustBeLoggedIn, forbidden, assertAdmin} = require('./auth.filters')
 
@@ -13,7 +14,14 @@ module.exports = require('express').Router()
         err.status = 404
         return next(err)
       } else {
-        Product.findById(productId)
+        Product.findOne({
+          where: {
+            id: productId
+          },
+          include: [{
+            model: ProductItem
+          }]
+        })
         .then(product => {
           if (!product) {
             res.sendStatus(404)
@@ -45,7 +53,11 @@ module.exports = require('express').Router()
     })
   .get('/',
     (req, res, next) =>
-      Product.findAll()
+      Product.findAll({
+        include: [{
+          model: ProductItem
+        }]
+      })
         .then(products => res.json(products))
         .catch(next))
   .post('/', assertAdmin,

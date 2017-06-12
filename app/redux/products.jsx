@@ -5,8 +5,8 @@ import axios from 'axios'
 // const INITIALIZE = 'INITIALIZE_PRODUCTS'
 const FILTER = 'FILTER_PRODUCTS'
 const CREATE = 'CREATE_PRODUCT'
-const SELECT = 'SELECT_PRODUCT'
 const REMOVE = 'SELECT_STORY'
+const SELECT = 'SELECT_PRODUCT'
 
 /* ------------   ACTION CREATORS     ------------------ */
 
@@ -19,7 +19,9 @@ const select = product => ({ type: SELECT, product })
 /* ------------       REDUCERS     ------------------ */
 
 const initialProductsState = {
-  selectedProduct: {},
+  selectedProduct: {
+    productItems: [{}]
+  },
   productsList: []
 }
 
@@ -27,7 +29,7 @@ const reducer = (state = initialProductsState, action) => {
   const newState = Object.assign({}, state)
 
   switch (action.type) {
-  case FILTER: // consider this name moving forward with how you layout your site -- KHLM
+  case FILTER:
     newState.productsList = action.products
     break
 
@@ -44,6 +46,10 @@ const reducer = (state = initialProductsState, action) => {
     newState.selectedProduct = action.product
     break
 
+  // case SELECT_SIZE:
+  //   newState.selectedSize = action.size
+  //   break
+
     // products.map(product => (
     //   action.product.id === product.id ? action.selectedProduct : product
     // ))
@@ -57,14 +63,12 @@ const reducer = (state = initialProductsState, action) => {
 
 /* ------------       DISPATCHERS     ------------------ */
 
-// axios request for ALL stories
 export const fetchProducts = () => dispatch => {
   axios.get('/api/products')
     .then(res => dispatch(filter(res.data)))
     .catch(err => console.error('Fetching products unsuccessful', err)) // fine for now, show the user that something went wrong. Maybe refer to juke forms; maybe look into growls -- KHLM
 }
 
-// axios request for a single story
 export const fetchProductById = (id) => dispatch => {
   axios.get(`/api/products/${id}`)
     .then(res => dispatch(select(res.data)))
@@ -76,5 +80,9 @@ export const fetchProductsByCategoryId = (categoryId) => (dispatch) => {
     .then(res => dispatch(filter(res.data)))
     .catch(err => console.error('Fetching products by category ID unsuccessful', err))
 }
+
+// export const updateSelectedSize = (size) => (dispatch) => {
+//   dispatch(selectSize(size))
+// }
 
 export default reducer

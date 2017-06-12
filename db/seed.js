@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('APP/db')
-    , {User, Product, Category, CartItem, Order, OrderItem, Promise} = db
+    , {User, Product, ProductItem, Category, CartItem, Order, OrderItem, Promise} = db
     , {mapValues} = require('lodash')
 
 function seedEverything() {
@@ -14,6 +14,7 @@ function seedEverything() {
   seeded.orders = orders(seeded)
   seeded.cartItems = cartItems(seeded)
   seeded.orderItems = orderItems(seeded)
+  seeded.productItems = productItems(seeded)
 
   return Promise.props(seeded)
 }
@@ -30,27 +31,6 @@ const users = seed(User, {
     email: 'barack@example.gov',
     password: '1234',
     isAdmin: false
-  }
-})
-
-const products = seed(Product, {
-  galaxy: {
-    title: 'galaxy',
-    description: 'These are great galaxy leggings',
-    price: 100.02,
-    photoUrl: 'http://lorempixel.com/300/300/'
-  },
-  snazzyworkout: {
-    title: 'snazzyworkout',
-    description: 'These are great snazzy workout leggings',
-    price: 35.45,
-    photoUrl: 'http://lorempixel.com/300/300/'
-  },
-  plainblack: {
-    title: 'plainblack',
-    description: 'These are great puppy leggings',
-    price: 19.99,
-    photoUrl: 'http://lorempixel.com/300/300/'
   }
 })
 
@@ -102,6 +82,65 @@ const cartItems = seed(CartItem, ({users, products}) => ({
     product_id: products.snazzyworkout.id,
     user_id: users.god.id
   }
+}))
+
+const products = seed(Product, ({categories}) => ({
+  galaxy: {
+    title: 'galaxy',
+    description: 'These are great galaxy leggings',
+    price: 100.02,
+    photoUrl: 'http://lorempixel.com/300/300/'
+  },
+  snazzyworkout: {
+    title: 'snazzyworkout',
+    description: 'These are great snazzy workout leggings',
+    price: 35.45,
+    photoUrl: 'http://lorempixel.com/300/300/'
+  },
+  plainblack: {
+    title: 'plainblack',
+    description: 'These are great puppy leggings',
+    price: 19.99,
+    photoUrl: 'http://lorempixel.com/300/300/'
+  }
+}))
+
+const productItems = seed(ProductItem, ({products}) => ({
+  item1: {
+    size: 'S',
+    quantity: 5,
+    product_id: products.galaxy.id
+  },
+  item2: {
+    size: 'M',
+    quantity: 10,
+    product_id: products.galaxy.id
+  },
+  item3: {
+    size: 'L',
+    quantity: 8,
+    product_id: products.galaxy.id
+  },
+  item4: {
+    size: 'S',
+    quantity: 9,
+    product_id: products.snazzyworkout.id
+  },
+  item5: {
+    size: 'M',
+    quantity: 12,
+    product_id: products.snazzyworkout.id
+  },
+  item6: {
+    size: 'L',
+    quantity: 10,
+    product_id: products.snazzyworkout.id
+  },
+  item7: {
+    size: 'M',
+    quantity: 10,
+    product_id: products.plainblack.id
+  },
 }))
 
 // const favorites = seed(Favorite,
@@ -205,4 +244,4 @@ function seed(Model, rows) {
   }
 }
 
-module.exports = Object.assign(seed, {users, products, cartItems, orders, orderItems, categories})
+module.exports = Object.assign(seed, {users, products, productItems, cartItems, orders, orderItems, categories})
