@@ -80,7 +80,7 @@ class SingleProduct extends Component {
       </div>
       <div className="col-xs-10">
         <div>
-          <h3>{selectedProduct.title}</h3>
+          <h3 id='single-product-title'>{selectedProduct.title}</h3>
           <img src={selectedProduct.photoUrl} className="img-thumbnail"/>
           <p>{selectedProduct.description}</p>
 
