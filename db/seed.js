@@ -7,15 +7,16 @@ const db = require('APP/db')
 function seedEverything() {
   const seeded = { // add only seed items that don't have dependencies here
     users: users(),
-    products: products(),
     categories: categories()
+    // products: products()
   }
   // if they have dependencies invoke below with seeded (order matters)
+  seeded.products = products(seeded)
   seeded.orders = orders(seeded)
   seeded.cartItems = cartItems(seeded)
   seeded.orderItems = orderItems(seeded)
   seeded.productItems = productItems(seeded)
-
+  // seeded.categories = categories(seeded)
   return Promise.props(seeded)
 }
 
@@ -89,19 +90,22 @@ const products = seed(Product, ({categories}) => ({
     title: 'galaxy',
     description: 'These are great galaxy leggings',
     price: 100.02,
-    photoUrl: 'http://lorempixel.com/300/300/'
+    photoUrl: 'http://lorempixel.com/300/300/',
+    category_id: categories.basic.id
   },
   snazzyworkout: {
     title: 'snazzyworkout',
     description: 'These are great snazzy workout leggings',
     price: 35.45,
-    photoUrl: 'http://lorempixel.com/300/300/'
+    photoUrl: 'http://lorempixel.com/300/300/',
+    category_id: categories.athletic.id
   },
   plainblack: {
     title: 'plainblack',
     description: 'These are great puppy leggings',
     price: 19.99,
-    photoUrl: 'http://lorempixel.com/300/300/'
+    photoUrl: 'http://lorempixel.com/300/300/',
+    category_id: categories.basic.id
   }
 }))
 
