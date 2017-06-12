@@ -19,28 +19,30 @@ class Cart extends React.Component {
 
   calculateTotal() {
     return this.props.cart.reduce((acc, item) => {
-      return acc + (item.product.price * item.quantity)
+      return acc + (item.productItem.product.price * item.quantity)
     }, 0)
       .toFixed(2)
   }
 
   render() {
     const { cart } = this.props
-    console.log('~!~!~!~CART', cart)
+    console.log('cart here ', cart)
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           {
-            cart.map(cartItem => {
+            cart[0]
+            ? cart.map(cartItem => {
               const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
               return (
                 <div className="form-inline" key={cartItem.id}>
-                  <h4><a href="">{cartItem.product.title}</a></h4>
-                  <p>$ {cartItem.product.price}</p>
+                  <h4><Link to={`/products/${cartItem.id}`}>{cartItem.productItem.product.title} - size {cartItem.productItem.size}</Link></h4>
+                  <p>$ {cartItem.productItem.product.price}</p>
                   <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input>
                 </div>
               )
             })
+            : <div></div>
           }
           <button type='submit' value='submit' className="btn btn-info btn-sm">Update Cart</button>
         </form>
@@ -56,8 +58,7 @@ class Cart extends React.Component {
   handleChange(itemIndex, event) {
     const temp = Object.assign({}, this.state.cartItems)
     temp[itemIndex] = Number(event.target.value)
-    console.log('temppp', temp)
-    this.setState({cartItems: temp}, () => { console.log('hello') })
+    this.setState({cartItems: temp})
   }
 
   handleSubmit(event) {
@@ -71,7 +72,6 @@ class Cart extends React.Component {
 
 const mapStateToProps = ({ cart }) => ({ cart })
 
-const mapDispatchToProps ={updateQty}
-
+const mapDispatchToProps ={ updateQty }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

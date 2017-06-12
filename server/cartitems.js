@@ -4,6 +4,7 @@ const db = require('APP/db')
 const User = db.model('users')
 const CartItem = db.model('cartItems')
 const Product = db.model('products')
+const ProductItem = db.model('productItems')
 
 const {
   assertAdmin
@@ -16,7 +17,10 @@ module.exports = require('express').Router()
         user_id: req.user.id
       },
       include: [{
-        model: Product
+        model: ProductItem,
+        include: [{
+          model: Product
+        }]
       }]
     })
       .then((products) => res.status(201).json(products))

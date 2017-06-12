@@ -8,15 +8,13 @@ function seedEverything() {
   const seeded = { // add only seed items that don't have dependencies here
     users: users(),
     categories: categories()
-    // products: products()
   }
   // if they have dependencies invoke below with seeded (order matters)
   seeded.products = products(seeded)
   seeded.orders = orders(seeded)
-  seeded.cartItems = cartItems(seeded)
   seeded.orderItems = orderItems(seeded)
   seeded.productItems = productItems(seeded)
-  // seeded.categories = categories(seeded)
+  seeded.cartItems = cartItems(seeded)
   return Promise.props(seeded)
 }
 
@@ -72,19 +70,6 @@ const orderItems = seed(OrderItem, ({orders, products}) => ({
 }))
 
 // if there are dependencies, the second param is a function that takes in the seeded object, so that you can use any of the previously made instances
-const cartItems = seed(CartItem, ({users, products}) => ({
-  item1: {
-    quantity: 2,
-    product_id: products.galaxy.id,
-    user_id: users.god.id // we can only say `user` if cartItems has an association to user
-  },
-  item2: {
-    quantity: 3,
-    product_id: products.snazzyworkout.id,
-    user_id: users.god.id
-  }
-}))
-
 const products = seed(Product, ({categories}) => ({
   galaxy: {
     title: 'galaxy',
@@ -145,6 +130,19 @@ const productItems = seed(ProductItem, ({products}) => ({
     quantity: 10,
     product_id: products.plainblack.id
   },
+}))
+
+const cartItems = seed(CartItem, ({users, productItems}) => ({
+  item1: {
+    quantity: 2,
+    product_item_id: productItems.item1.id,
+    user_id: users.god.id // we can only say `user` if cartItems has an association to user
+  },
+  item2: {
+    quantity: 3,
+    product_item_id: productItems.item7.id,
+    user_id: users.god.id
+  }
 }))
 
 // const favorites = seed(Favorite,
