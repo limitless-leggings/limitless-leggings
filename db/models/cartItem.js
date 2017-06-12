@@ -1,7 +1,7 @@
 'use strict'
 const Sequelize = require('sequelize')
 
-module.exports = db => db.define('cartItems', {
+module.exports = db => db.define('cartItems', { //consider adding column for session --KHLM
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false

@@ -18,7 +18,7 @@ module.exports = require('express').Router()
       },
       include: [{
         model: ProductItem,
-        include: [{
+        include: [{ //consider default scope on Product Item table --KHLM
           model: Product
         }]
       }]
@@ -49,7 +49,7 @@ module.exports = require('express').Router()
   .post('/',
     // TODO: req.body is empty
     (req, res, next) =>
-    CartItem.create({
+    CartItem.create({ //consider creating Item before assoc either user or session, based on req.user --KHLM
       quantity: req.body.quantity,
       user_id: req.user.id,
       product_item_id: req.body.product_item_id
@@ -71,8 +71,8 @@ module.exports = require('express').Router()
     })
       // .then(item => item.update(req.body))
     .then(item => {
-      console.log('itemmmmm', item.dataValues)
-      res.status(201).send(item.dataValues)
+      console.log('itemmmmm', item.dataValues) // remove your logs!
+      res.status(201).send(item.dataValues) // maybe just send back 'item'
     })
     .catch(next)
   })

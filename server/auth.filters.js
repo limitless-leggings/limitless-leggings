@@ -18,7 +18,7 @@ const selfOnly = action => (req, res, next) => {
 const assertAdmin = (req, res, next) => {
   User.findById(req.user.id)
     .then((foundUser) => {
-      if (!foundUser.isAdmin) {
+      if (!foundUser.isAdmin) { // could just user req.user.isAdmin --KHLM
         return res.status(403).send('You must be an administrator to perform this action or view this page.')
       }
       next()

@@ -25,7 +25,7 @@ const reducer = (state = initialCategoryState, action) => {
   const newState = Object.assign({}, state)
 
   switch (action.type) {
-  case INITIALIZE:
+  case INITIALIZE: //consider calling this case 'SET' --KHLM
     newState.categoryList = action.categories
     break
 

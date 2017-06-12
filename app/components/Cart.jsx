@@ -26,19 +26,19 @@ class Cart extends React.Component {
 
   render() {
     const { cart } = this.props
-    console.log('cart here ', cart)
+    console.log('cart here ', cart) //remove console.logs before pushing to master --KHLM
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           {
-            cart[0]
+            cart[0] // this is already known, so it doesn't need to be a ternary --KHLM'
             ? cart.map(cartItem => {
               const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
               return (
                 <div className="form-inline" key={cartItem.id}>
                   <h4><Link to={`/products/${cartItem.id}`}>{cartItem.productItem.product.title} - size {cartItem.productItem.size}</Link></h4>
                   <p>$ {cartItem.productItem.product.price}</p>
-                  <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input>
+                  <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input> {/*()=> this.handleChange(cartItem.id)*/}
                 </div>
               )
             })
@@ -57,7 +57,7 @@ class Cart extends React.Component {
 
   handleChange(itemIndex, event) {
     const temp = Object.assign({}, this.state.cartItems)
-    temp[itemIndex] = Number(event.target.value)
+    temp[itemIndex] = Number(event.target.value) //itemIndex is not semantically meanigful. try 'Id', cause it's awesome! --KHLM
     this.setState({cartItems: temp})
   }
 

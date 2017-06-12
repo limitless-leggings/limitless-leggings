@@ -25,7 +25,7 @@ class SingleProduct extends Component {
   }
 
   findSelectedProduct() {
-    return this.props.selectedProduct.productItems.filter(item => {
+    return this.props.selectedProduct.productItems.filter(item => { //perhaps replace .filter with .find which returns a single item --KHLM
       return item.size === this.state.selectedSize
     })
   }
@@ -58,14 +58,14 @@ class SingleProduct extends Component {
     const selectedSize = this.state.selectedSize
     const selectedQuantity = this.state.selectedQuantity
 
-    const findSelectedProduct = this.findSelectedProduct
+    const findSelectedProduct = this.findSelectedProduct //try destructuring like const {findSelectedProduct, updateSelectedSize, etc} = this
     const updateSelectedSize = this.updateSelectedSize
     const updateSelectedQuantity = this.updateSelectedQuantity
     const handleSubmit = this.handleSubmit
 
     const createQuantityArrayFromSize = () => {
       let selectedItem = findSelectedProduct()
-      if (selectedItem[0]) {
+      if (selectedItem[0]) { //maybe write selectedItem.length for convention. this might change to selectedItem if you use find --KHLM
         let maxQuantity = selectedItem[0].quantity
         return range(1, maxQuantity + 1)
       } else {
@@ -95,7 +95,7 @@ class SingleProduct extends Component {
             <ControlLabel>Select Quantity</ControlLabel>
             <FormControl onChange={updateSelectedQuantity} componentClass="select" placeholder="select">
               {createQuantityArrayFromSize(selectedSize).map((quantity) => (
-                <option key={quantity.toString()} value={quantity}>{quantity}</option>
+                <option key={quantity.toString()} value={quantity}>{quantity}</option> //add 2nd param in map and use as key --KHLM
               ))}
             </FormControl>
           </FormGroup>

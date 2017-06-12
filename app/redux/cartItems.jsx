@@ -19,7 +19,7 @@ const update = updatedValues => ({ type: UPDATE, updatedValues })
 
 export default function reducer(cartItems = [], action) {
   switch (action.type) {
-  case INITIALIZE:
+  case INITIALIZE: //consider calling this case 'SET' too --KHLM
     return action.cartItems
 
   case ADD:

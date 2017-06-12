@@ -5,7 +5,7 @@ import axios from 'axios'
 // const INITIALIZE = 'INITIALIZE_PRODUCTS'
 const FILTER = 'FILTER_PRODUCTS'
 const CREATE = 'CREATE_PRODUCT'
-const REMOVE = 'SELECT_STORY'
+const REMOVE = 'SELECT_STORY' //update me --KHLM
 const SELECT = 'SELECT_PRODUCT'
 
 /* ------------   ACTION CREATORS     ------------------ */
@@ -17,7 +17,7 @@ const remove = id => ({ type: REMOVE, id })
 const select = product => ({ type: SELECT, product })
 
 /* ------------       REDUCERS     ------------------ */
-
+// CLEAN ME UP, PLEASE! --KHLM
 const initialProductsState = {
   selectedProduct: {
     productItems: [{}]
@@ -29,7 +29,7 @@ const reducer = (state = initialProductsState, action) => {
   const newState = Object.assign({}, state)
 
   switch (action.type) {
-  case FILTER:
+  case FILTER: //consider calling this case 'SET' --KHLM
     newState.productsList = action.products
     break
 
@@ -46,7 +46,7 @@ const reducer = (state = initialProductsState, action) => {
     newState.selectedProduct = action.product
     break
 
-  // case SELECT_SIZE:
+  // case SELECT_SIZE:  //i'll never be used - delete me --KHLM'
   //   newState.selectedSize = action.size
   //   break
 
