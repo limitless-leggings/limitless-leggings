@@ -1,59 +1,77 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { updateQty } from '../redux/cartItems'
 
 /* -----------------    COMPONENT     ------------------ */
+class Cart extends React.Component {
+  constructor(props) {
+    super(props)
 
-const Cart = ({ cart }) => {
-  const calculateTotal = () => {
-    return cart.reduce((acc, item) => {
-      console.log('item.product', item.product)
-      return acc + item.product.price
-    }, 0)
-    .toFixed(2)
+    this.state = {
+      cartItems: {}
+    }
+    // set total price as part of the state
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  return (
-    <div className="table-responsive cart_info">
-      <table className="table table-condensed">
-        <thead>
-          <tr className="cart_menu">
-            <td className="description">Products</td>
-            <td className="price">Price</td>
-            <td className="quantity">Quantity</td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
+  calculateTotal() {
+    return this.props.cart.reduce((acc, item) => {
+      return acc + (item.product.price * item.quantity)
+    }, 0)
+      .toFixed(2)
+  }
+
+  render() {
+    const { cart } = this.props
+    console.log('~!~!~!~CART', cart)
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
           {
             cart.map(cartItem => {
+              const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
               return (
-                <tr key={cartItem.id}>
-                  <td className="cart_description">
-                    <h4><a href="">{cartItem.product.title}</a></h4>
-                  </td>
-                  <td className="cart_price">
-                    <p>{cartItem.product.price}</p>
-                  </td>
-                  <td className="cart_price">
-                    <p>{cartItem.quantity}</p>
-                  </td>
-                </tr>)
+                <div className="form-inline" key={cartItem.id}>
+                  <h4><a href="">{cartItem.product.title}</a></h4>
+                  <p>$ {cartItem.product.price}</p>
+                  <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input>
+                </div>
+              )
             })
           }
-        </tbody>
-      </table>
+          <button type='submit' value='submit' className="btn btn-info btn-sm">Update Cart</button>
+        </form>
+        <br></br>
+        <span>Total Product Price: </span>
+        <span className='text-right ng-binding'>${this.calculateTotal()}</span>
+        <br></br>
+        <button><Link to="/">Checkout</Link></button>
+      </div>
+    )
+  }
 
-      <br></br>
-      <span>Total Product Price: </span>
-      <span className='text-right ng-binding'>${calculateTotal()}</span>
-       <br></br>
-      <button><Link to="/">Checkout</Link></button>
-    </div>
-  )
+  handleChange(itemIndex, event) {
+    const temp = Object.assign({}, this.state.cartItems)
+    temp[itemIndex] = Number(event.target.value)
+    console.log('temppp', temp)
+    this.setState({cartItems: temp}, () => { console.log('hello') })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const updatedValues = this.state.cartItems
+    this.props.updateQty(updatedValues)
+  }
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapState = ({ cart }) => ({ cart })
-export default connect(mapState)(Cart)
+const mapStateToProps = ({ cart }) => ({ cart })
+
+const mapDispatchToProps ={updateQty}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
