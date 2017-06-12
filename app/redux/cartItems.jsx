@@ -3,12 +3,14 @@ import axios from 'axios'
 /* -----------------    ACTIONS     ------------------ */
 
 const INITIALIZE = 'INITIALIZE_CARTITEMS'
+const ADD = 'ADD_CARTITEM'
 const UPDATE = 'UPDATE_QUANTITY'
 // const REMOVE     = 'REMOVE_STORY';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
 const init = cartItems => ({ type: INITIALIZE, cartItems })
+const add = cartItem => ({ type: ADD, cartItem })
 const update = updatedValues => ({ type: UPDATE, updatedValues })
 // const remove = id      => ({ type: REMOVE, id });
 // const update = story   => ({ type: UPDATE, story });
@@ -19,6 +21,9 @@ export default function reducer(cartItems = [], action) {
   switch (action.type) {
   case INITIALIZE:
     return action.cartItems
+
+  case ADD:
+    return [cartItems, ...action.cartItem]
 
   // case UPDATE:
   //   console.log('~!~!~!~!CART ITEMS', action.updatedValues)
@@ -47,6 +52,14 @@ export const fetchCartItems = () => dispatch => {
       return dispatch(init(res.data))
     })
     .catch(err => console.error('Fetching cartItems unsuccessful', err))
+}
+
+export const addCartItem = (cartItem) => dispatch => {
+  return axios.post('/api/cart/', cartItem)
+    .then(res => {
+      return dispatch(add(res.data))
+    })
+    .catch(err => console.error('Addding cartItem unsuccessful', err))
 }
 
 export const updateQty = (updatedValues) => dispatch => {

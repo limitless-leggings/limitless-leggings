@@ -5,6 +5,7 @@ import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 import { range } from 'lodash'
 
 import { fetchProductById, updateSelectedSize } from '../../redux/products'
+import { addCartItem } from '../../redux/cartItems'
 import Sidebar from '../Sidebar'
 
 /* -----------------    COMPONENT     ------------------ */
@@ -13,12 +14,20 @@ class SingleProduct extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      selectedId: 0,
       selectedSize: '',
       selectedQuantity: 0
     }
     this.updateSelectedSize = this.updateSelectedSize.bind(this)
     this.updateSelectedQuantity = this.updateSelectedQuantity.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.findSelectedProduct = this.findSelectedProduct.bind(this)
+  }
+
+  findSelectedProduct() {
+    return this.props.selectedProduct.productItems.filter(item => {
+      return item.size === this.state.selectedSize
+    })
   }
 
   updateSelectedSize(event) {
@@ -35,6 +44,13 @@ class SingleProduct extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    let toAdd = {
+      product_item_id: this.findSelectedProduct()[0].id,
+      quantity: Number(this.state.selectedQuantity)
+    }
+    console.log('WILL BE SUBMITTED: ', toAdd)
+    this.props.handleAddToCart(toAdd)
+    // subtract # ordered from total quantity here
   }
 
   render() {
@@ -42,14 +58,13 @@ class SingleProduct extends Component {
     const selectedSize = this.state.selectedSize
     const selectedQuantity = this.state.selectedQuantity
 
+    const findSelectedProduct = this.findSelectedProduct
     const updateSelectedSize = this.updateSelectedSize
     const updateSelectedQuantity = this.updateSelectedQuantity
     const handleSubmit = this.handleSubmit
 
-    function createQuantityArrayFromSize() {
-      let selectedItem = selectedProduct.productItems.filter(item => {
-        return item.size === selectedSize
-      })
+    const createQuantityArrayFromSize = () => {
+      let selectedItem = findSelectedProduct()
       if (selectedItem[0]) {
         let maxQuantity = selectedItem[0].quantity
         return range(1, maxQuantity + 1)
@@ -80,12 +95,14 @@ class SingleProduct extends Component {
             <ControlLabel>Select Quantity</ControlLabel>
             <FormControl onChange={updateSelectedQuantity} componentClass="select" placeholder="select">
               {createQuantityArrayFromSize(selectedSize).map((quantity) => (
-                <option key={quantity} value={quantity}>{quantity}</option>
+                <option key={quantity.toString()} value={quantity}>{quantity}</option>
               ))}
             </FormControl>
           </FormGroup>
 
-          <Button onSubmit={handleSubmit} type="submit" bsStyle="success">Add to Cart</Button>
+          <form onSubmit={handleSubmit}>
+            <Button type="submit" bsStyle="success">Add to Cart</Button>
+          </form>
         </div>
       </div>
     </div>
@@ -99,12 +116,12 @@ const mapStateToProps = ({products}) => ({
   selectedProduct: products.selectedProduct
 })
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     updateSelectedSize: (event) => {
-//       dispatch(updateSelectedSize(event.target.value))
-//     }
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleAddToCart: (cartItem) => {
+      dispatch(addCartItem(cartItem))
+    }
+  }
+}
 
-export default connect(mapStateToProps)(SingleProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

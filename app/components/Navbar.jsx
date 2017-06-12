@@ -7,68 +7,49 @@ import WhoAmI from './WhoAmI'
 
 /* -----------------    COMPONENT     ------------------ */
 
-class Navbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const user = this.props.user
-    return (
-      <nav className="navbar navbar-default">
-        <div className="container">
-          <div className="navbar-header">
-            <button
-              type="button"
-              className="navbar-toggle collapsed"
-              data-toggle="collapse"
-              data-target=".navbar-collapse">
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-              <span className="icon-bar" />
-            </button>
-            <Link className="navbar-brand" to="/">{/*<img src="/images/logo.png" />*/}<h3>limitless leggings</h3></Link>
-          </div>
-          <div className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li>
-                <Link to="/products" activeClassName="active">shop</Link>
-              </li>
-              <li>
-                <Link to="#" activeClassName="active">our company</Link>
-              </li>
-              <li>
-                <Link to="/login" activeClassName="active">login</Link>
-              </li>
-              <li>
-                <Link to="/signup" activeClassName="active">sign up</Link>
-              </li>
-              <li>
-                <Link to="/cart" activeClassName="active">your cart</Link>
-              </li>
-            </ul>
-            {user ? <WhoAmI/> : <Login/>}
-          </div>
+const Navbar = ({user}) => {
+  return (
+    <nav className="navbar navbar-default">
+      <div className="container">
+        <div className="navbar-header">
+          <button
+            type="button"
+            className="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target=".navbar-collapse">
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+          </button>
+          <Link className="navbar-brand" to="/">limitless leggings</Link>
         </div>
-      </nav>
-    );
-  }
+        <div className="collapse navbar-collapse">
+          <ul className="nav navbar-nav">
+            <li>
+              <Link to="/products" activeClassName="active">shop</Link>
+            </li>
+            <li>
+              <Link to="#" activeClassName="active">our company</Link>
+            </li>
+            <li>
+              <Link to="/login" activeClassName="active">login</Link>
+            </li>
+            <li>
+              <Link to="/signup" activeClassName="active">sign up</Link>
+            </li>
+            <li>
+              <Link to="/cart" activeClassName="active">your cart</Link>
+            </li>
+          </ul>
+          {user ? <WhoAmI/> : <Login/>}
+        </div>
+      </div>
+    </nav>
+  )
 }
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapStateToProps = ({auth}) => ({user: auth});
-// equivalent to:
-// const mapState = state => {
-//   return {
-//     currentUser: state.currentUser
-//   };
-// };
+const mapStateToProps = ({auth}) => ({user: auth})
 
-const mapDispatchToProps = dispatch => ({
-//   logout: () => {
-//     dispatch(logOutUser());
-//   }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps)(Navbar)

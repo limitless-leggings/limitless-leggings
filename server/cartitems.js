@@ -49,7 +49,11 @@ module.exports = require('express').Router()
   .post('/',
     // TODO: req.body is empty
     (req, res, next) =>
-    CartItem.create(req.body)
+    CartItem.create({
+      quantity: req.body.quantity,
+      user_id: req.user.id,
+      product_item_id: req.body.product_item_id
+    })
     .then(items => {
       res.status(201).send(items)
     })
@@ -61,6 +65,7 @@ module.exports = require('express').Router()
         id: req.params.id
       }
     })
+    // set req.user.id?
     .then(item => {
       return item.update(req.body)
     })
