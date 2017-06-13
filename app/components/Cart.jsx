@@ -50,7 +50,7 @@ class Cart extends React.Component {
         <span>Total Product Price: </span>
         <span className='text-right ng-binding'>${this.calculateTotal()}</span>
         <br></br>
-        <button><Link to="/">Checkout</Link></button>
+        <button><Link to="/checkout">Checkout</Link></button>
       </div>
     )
   }

@@ -5,6 +5,8 @@ const User = db.model('users')
 const CartItem = db.model('cartItems')
 const Product = db.model('products')
 const ProductItem = db.model('productItems')
+const Order = db.model('orders')
+const OrderItem = db.model('orderItems')
 
 const {
   assertAdmin
@@ -76,3 +78,43 @@ module.exports = require('express').Router()
     })
     .catch(next)
   })
+
+  //route for checkout -- posting new Order object with current order items, and then clearing cart
+  .post('/order', (req, res, next) => {
+    let createdOrder, foundCartItems;
+    Order.create({ //first, create the Order object
+      user_id: req.user.id
+    })
+      .then(_createdOrder => { //then, find the cart items belonging to the user
+        createdOrder = _createdOrder;
+        return CartItem.findAll({
+          where: {
+            user_id: req.user.id
+          },
+          include: [{
+            model: ProductItem //import this above instead of Product
+          }]
+        })
+      })
+      .then(_foundCartItems => { //then, turn those found cart items into order items
+        foundCartItems = _foundCartItems;
+        let arrOfCreatingItems = foundCartItems.map(cartItem => { // an array of promises
+          return OrderItem.create({
+            order_id: createdOrder.id,
+            quantity: cartItem.quantity,
+            // priceAtOrder:
+          })
+        });
+        return Promise.all(arrOfCreatingItems);
+      })
+      .then(createdOrderItems => { //now, delete the cart items (NEED TO TEST THIS)
+        let arrOfDestroyingItems = foundCartItems.map(cartItem => {
+          cartItem.destroy();
+        })
+        return Promise.all(arrOfDestroyingItems);
+      })
+      .then(createdOrderItems => {
+        res.sendStatus(201);
+      })
+  .catch(next)
+})

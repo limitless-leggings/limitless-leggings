@@ -5,6 +5,7 @@ import axios from 'axios'
 const INITIALIZE = 'INITIALIZE_CARTITEMS'
 const ADD = 'ADD_CARTITEM'
 const UPDATE = 'UPDATE_QUANTITY'
+//const CREATE_ORDER = 'CREATE_ORDER';
 // const REMOVE     = 'REMOVE_STORY';
 
 /* ------------   ACTION CREATORS     ------------------ */
@@ -12,6 +13,7 @@ const UPDATE = 'UPDATE_QUANTITY'
 const init = cartItems => ({ type: INITIALIZE, cartItems })
 const add = cartItem => ({ type: ADD, cartItem })
 const update = updatedValues => ({ type: UPDATE, updatedValues })
+// const create_order =  order  => ({ type: CREATE_ORDER, order });
 // const remove = id      => ({ type: REMOVE, id });
 // const update = story   => ({ type: UPDATE, story });
 
@@ -22,8 +24,14 @@ export default function reducer(cartItems = [], action) {
   case INITIALIZE:
     return action.cartItems
 
+  // case REMOVE:
+  //   return stories.filter(story => story.id !== action.id);
+
   case ADD:
     return [cartItems, ...action.cartItem]
+
+  // case CREATE_ORDER:
+  //   return action.order
 
   // case UPDATE:
   //   console.log('~!~!~!~!CART ITEMS', action.updatedValues)
@@ -77,3 +85,13 @@ export const updateQty = (updatedValues) => dispatch => {
   })
     .catch(err => console.error('Update cartItems unsuccessful', err))
 }
+
+export const buildNewOrder = (cartItemArray) => dispatch => {
+  axios.post('/api/cart/order')
+    .then(res => {
+      console.log("RES.DATA: ", res.data)
+      //dispatch(create_order(res.data)) // dispatch the action that clears the cart
+    })
+    .catch(err => console.error('Order build unsuccessful', err))
+}
+
