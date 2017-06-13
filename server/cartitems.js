@@ -28,28 +28,7 @@ module.exports = require('express').Router()
       .then((products) => res.status(201).json(products))
       .catch(next)
   })
-  // .get('/:id',
-  //   // assertAdmin,
-  //   (req, res, next) => {
-  //     console.log('helloooooo')
-  //     User.findOne({
-  //       where: {
-  //         id: req.user.id
-  //       }
-  //     })
-  //     .then((user) => {
-  //       CartItem.findAll({
-  //         where: {
-  //           userId: user.id
-  //         }
-  //       })
-  //     })
-  //     .then(products => res.status(201).json(products))
-  //     .catch(next)
-  //   })
-
   .post('/',
-    // TODO: req.body is empty
     (req, res, next) =>
     CartItem.create({
       quantity: req.body.quantity,
@@ -57,9 +36,23 @@ module.exports = require('express').Router()
       product_item_id: req.body.product_item_id
     })
     .then(items => {
-      res.status(201).send(items)
+      return CartItem.findOne({
+        where: {
+          id: items.id
+        },
+        include: [{
+          model: ProductItem,
+          include: [{
+            model: Product
+          }]
+        }]
+      })
     })
-    .catch(next))
+    .then(item => {
+      res.status(201).send(item)
+    })
+    .catch(next)
+    )
 
   .put('/:id', (req, res, next) => {
     CartItem.findOne({
@@ -103,7 +96,7 @@ module.exports = require('express').Router()
             quantity: cartItem.quantity,
             // priceAtOrder:
           })
-        });
+        })
         return Promise.all(arrOfCreatingItems)
       })
       .then(createdOrderItems => { // now, delete the cart items (NEED TO TEST THIS)

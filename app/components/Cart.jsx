@@ -17,10 +17,11 @@ class Cart extends React.Component {
   }
 
   calculateTotal() {
-    return this.props.cart.reduce((acc, item) => {
-      return acc + (item.productItem.product.price * item.quantity)
-    }, 0)
-      .toFixed(2)
+    if (this.props.cart.productItem) {
+      return this.props.cart.reduce((acc, item) => {
+        return acc + (item.productItem.product.price * item.quantity)
+      }, 0)
+    }
   }
 
   render() {
@@ -29,13 +30,13 @@ class Cart extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           {
-            cart.length
+            cart.length > 0
             ? cart.map(cartItem => {
               const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
               return (
                 <div className="form-inline" key={cartItem.id}>
-                  <h4><Link to={`/products/${cartItem.id}`}>{cartItem.productItem && cartItem.productItem.product.title} - size {cartItem.productItem.size}</Link></h4>
-                  <p>$ {cartItem.productItem.product.price}</p>
+                  <h4><Link to={`/products/${cartItem.id}`}>{cartItem.productItem && cartItem.productItem.product.title} - size {cartItem.productItem && cartItem.productItem.size}</Link></h4>
+                  <p>$ {cartItem.productItem && cartItem.productItem.product.price}</p>
                   <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input>
                 </div>
               )

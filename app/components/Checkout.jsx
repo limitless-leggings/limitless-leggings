@@ -31,7 +31,7 @@ const Checkout = ({ createOrder, cart }) => {
         </thead>
         <tbody>
           {
-            cart.map(cartItem => {
+            cart.length && cart.map(cartItem => {
               return (
                 <tr key={cartItem.id}>
                   <td className="cart_description">

@@ -22,7 +22,7 @@ export default function reducer(cartItems = [], action) {
     return action.cartItems
 
   case ADD:
-    return [action.cartItem, ...cartItems]
+    return [...cartItems, action.cartItem]
 
   default:
     return cartItems
@@ -42,6 +42,7 @@ export const fetchCartItems = () => dispatch => {
 export const addCartItem = (cartItem) => dispatch => {
   return axios.post('/api/cart/', cartItem)
     .then(res => {
+      console.log('&&&&&', res.data)
       return dispatch(add(res.data))
     })
     .catch(err => console.error('Addding cartItem unsuccessful', err))
