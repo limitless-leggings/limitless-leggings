@@ -75,21 +75,21 @@ const products = seed(Product, ({categories}) => ({
     title: 'galaxy',
     description: 'These are great galaxy leggings',
     price: 100.02,
-    photoUrl: 'http://lorempixel.com/300/300/',
+    photoUrl: 'http://tinyurl.com/y9qjuxjo',
     category_id: categories.basic.id
   },
   snazzyworkout: {
     title: 'snazzyworkout',
     description: 'These are great snazzy workout leggings',
     price: 35.45,
-    photoUrl: 'http://lorempixel.com/300/300/',
+    photoUrl: 'http://tinyurl.com/yd3j7jek',
     category_id: categories.athletic.id
   },
   plainblack: {
     title: 'plainblack',
-    description: 'These are great puppy leggings',
+    description: 'These are great basic, black leggings',
     price: 19.99,
-    photoUrl: 'http://lorempixel.com/300/300/',
+    photoUrl: 'http://tinyurl.com/ybzapozl',
     category_id: categories.basic.id
   }
 }))

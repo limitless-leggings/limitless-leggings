@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 
 import { buildNewOrder } from '../redux/cartItems'
 
@@ -9,8 +9,8 @@ import { buildNewOrder } from '../redux/cartItems'
 const Checkout = ({ createOrder, cart }) => {
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    createOrder(cart);
+    event.preventDefault()
+    createOrder(cart)
   }
 
   return (
@@ -24,13 +24,9 @@ const Checkout = ({ createOrder, cart }) => {
             <td></td>
           </tr>
         </thead>
-        <div>
-          {console.log('what is cart????', cart)}
-          </div>
         <tbody>
           {
             cart.map(cartItem => {
-              console.log(cartItem)
               return (
                 <tr key={cartItem.id}>
                   <td className="cart_description">
@@ -129,7 +125,8 @@ const Checkout = ({ createOrder, cart }) => {
 const mapState = ({ cart }) => ({ cart })
 const mapDispatch = dispatch => ({
   createOrder: (cartItemArray) => {
-    dispatch(buildNewOrder(cartItemArray));
+    dispatch(buildNewOrder(cartItemArray))
+    browserHistory.push('/completedorder')
   }
 })
 export default connect(mapState, mapDispatch)(Checkout)

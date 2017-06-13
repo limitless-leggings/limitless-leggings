@@ -1,3 +1,25 @@
 .select-size-quantity {
   margin-top: 40px;
 }
+
+.product-img {
+  width:  300px;
+  height: 300px;
+}
+
+.whoami {
+  padding-top: 10px;
+}
+
+.logout {
+  margin-left: 40px;
+}
+
+.loginform {
+  position: relative;
+  top: 10px;
+  left: 10px;
+
+}
+
+

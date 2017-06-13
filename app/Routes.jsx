@@ -12,6 +12,7 @@ import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import Sidebar from './components/Sidebar'
 import Signup from './components/Signup'
+import CompletedOrder from './components/CompletedOrder'
 
 
 import { fetchProducts, fetchProductById, fetchProductsByCategoryId } from './redux/products'
@@ -28,6 +29,7 @@ const Routes = ({fetchInitialData, onCartEnter, onProductEnter, onCategoryEnter,
       <Route path="/products/:productId" component={SingleProduct} onEnter={onProductEnter} />
       <Route path="/cart" component={Cart} onEnter={onCartEnter}/>
       <Route path="/checkout" component={Checkout} onEnter={onCartEnter} />
+      <Route path="/completedorder" component={CompletedOrder} />
     </Route>
     <Route path='*' component={NotFound} />
   </Router>

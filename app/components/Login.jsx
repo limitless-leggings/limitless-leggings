@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const Login = ({ login }) => (
-  <form onSubmit={evt => {
+  <form className="loginform" onSubmit={evt => {
     evt.preventDefault()
     login(evt.target.username.value, evt.target.password.value) //we'll do this again at the end of signup
   } }>

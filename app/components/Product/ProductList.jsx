@@ -17,7 +17,7 @@ const ProductList = ({productsList}) => (
               return (
                 <div key={product.id}>
                   <Link to={`/products/${product.id}`}>
-                    <img src={product.photoUrl} />
+                    <img className="product-img" src={product.photoUrl} />
                     <div className="caption">
                       <h5>
                         <span>{product.title}</span>

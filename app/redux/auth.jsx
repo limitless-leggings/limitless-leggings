@@ -32,10 +32,10 @@ const reducer = (state = null, action) => {
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const login = (email, password) =>
+export const login = (username, password) =>
   dispatch =>
     axios.post('/api/auth/login/local',
-      { email, password })
+      { username, password })
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()))
 
