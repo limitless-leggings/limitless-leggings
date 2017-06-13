@@ -48,9 +48,7 @@ class SingleProduct extends Component {
       product_item_id: this.findSelectedProduct()[0].id,
       quantity: Number(this.state.selectedQuantity)
     }
-    console.log('WILL BE SUBMITTED: ', toAdd)
     this.props.handleAddToCart(toAdd)
-    // subtract # ordered from total quantity here
   }
 
   render() {
@@ -80,29 +78,39 @@ class SingleProduct extends Component {
       </div>
       <div className="col-xs-10">
         <div>
-          <h3>{selectedProduct.title}</h3>
-          <img src={selectedProduct.photoUrl} className="img-thumbnail"/>
-          <p>{selectedProduct.description}</p>
+          <div className="col-md-6 col-xs-10">
+            <h3>{selectedProduct.title}</h3>
+            <img src={selectedProduct.photoUrl} className="img-thumbnail"/>
+            <p>{selectedProduct.description}</p>
+          </div>
 
-          <FormGroup controlId="formControlsSelect">
-            <ControlLabel>Select Size</ControlLabel>
-            <FormControl onChange={updateSelectedSize} componentClass="select" placeholder="select">
-              {selectedProduct.productItems.map((productItem) => (
-                  <option key={productItem.id} value={productItem.size}>{productItem.size}</option>
+          <div className="col-md-4 col-xs-8 select-size-quantity">
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select Size</ControlLabel>
+              <FormControl onChange={updateSelectedSize} componentClass="select">
+                <option>Select a size here</option>
+                {selectedProduct.productItems.map((productItem) => (
+                    <option key={productItem.id} value={productItem.size}>{productItem.size}</option>
+                  ))}
+              </FormControl>
+
+              <ControlLabel>Select Quantity</ControlLabel>
+              <FormControl onChange={updateSelectedQuantity} componentClass="select">
+                <option>Select a quantity</option>
+                {createQuantityArrayFromSize(selectedSize).map((quantity) => (
+                  <option key={quantity.toString()} value={quantity}>{quantity}</option>
                 ))}
-            </FormControl>
+              </FormControl>
+            </FormGroup>
 
-            <ControlLabel>Select Quantity</ControlLabel>
-            <FormControl onChange={updateSelectedQuantity} componentClass="select" placeholder="select">
-              {createQuantityArrayFromSize(selectedSize).map((quantity) => (
-                <option key={quantity.toString()} value={quantity}>{quantity}</option>
-              ))}
-            </FormControl>
-          </FormGroup>
-
-          <form onSubmit={handleSubmit}>
-            <Button type="submit" bsStyle="success">Add to Cart</Button>
-          </form>
+            <form onSubmit={handleSubmit}>
+              {
+                this.state.selectedQuantity > 0
+                ? <Button type="submit" bsStyle="success">Add to Cart</Button>
+                : <Button type="submit" bsStyle="success" disabled>Add to Cart</Button>
+              }
+            </form>
+          </div>
         </div>
       </div>
     </div>

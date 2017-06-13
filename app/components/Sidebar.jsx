@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 /* -----------------    COMPONENT     ------------------ */
 
@@ -12,6 +12,7 @@ const Sidebar = ({categoryList}) => {
       </section>
       <hr />
       <ul className="list-unstyled">
+        <li><Link to="/products">All</Link></li>
         {
           categoryList.map(category => {
             return (
