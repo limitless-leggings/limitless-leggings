@@ -23,7 +23,7 @@ const Routes = ({fetchInitialData, onCartEnter, onProductEnter, onCategoryEnter,
     <Route path="/" component={Root} onEnter={fetchInitialData}>
       <IndexRedirect to="/products" />
       <Route path="signup" component={Signup} />
-      <Route path="/products" component={ProductList} />
+      <Route path="/products" component={ProductList} onEnter={fetchInitialData} />
       <Route path="/categories/:categoryId" component={ProductList} onEnter={onCategoryEnter} />
       <Route path="/products/:productId" component={SingleProduct} onEnter={onProductEnter} />
       <Route path="/cart" component={Cart} onEnter={onCartEnter}/>

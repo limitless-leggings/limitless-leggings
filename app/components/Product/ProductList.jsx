@@ -3,8 +3,7 @@ import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
 import Sidebar from '../Sidebar'
-// import SingleProduct from './SingleProduct' import { addStory } from // (this is for importing other components into this one)
-// '../../redux/stories'
+
 /* -----------------    COMPONENT     ------------------ */
 
 const ProductList = ({productsList}) => (
@@ -36,9 +35,5 @@ const ProductList = ({productsList}) => (
 /* -----------------    CONTAINER     ------------------ */
 
 const mapStateToProps = ({ products }) => ({ productsList: products.productsList })
-
-// const mapDispatch = { // (for later, if we need to mapDispatch)
-//   addStory
-// }
 
 export default connect(mapStateToProps)(ProductList)
