@@ -11,6 +11,8 @@ import NotFound from './components/NotFound'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import Sidebar from './components/Sidebar'
+import Signup from './components/Signup'
+
 
 import { fetchProducts, fetchProductById, fetchProductsByCategoryId } from './redux/products'
 import { fetchCategories } from './redux/categories'
@@ -20,6 +22,7 @@ const Routes = ({fetchInitialData, onCartEnter, onProductEnter, onCategoryEnter,
   <Router history={browserHistory}>
     <Route path="/" component={Root} onEnter={fetchInitialData}>
       <IndexRedirect to="/products" />
+      <Route path="signup" component={Signup} />
       <Route path="/products" component={ProductList} />
       <Route path="/categories/:categoryId" component={ProductList} onEnter={onCategoryEnter} />
       <Route path="/products/:productId" component={SingleProduct} onEnter={onProductEnter} />

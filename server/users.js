@@ -3,7 +3,12 @@
 const db = require('APP/db')
 const User = db.model('users')
 
-const {mustBeLoggedIn, forbidden, assertAdmin, selfOrAdmin} = require('./auth.filters')
+const {
+  mustBeLoggedIn,
+  forbidden,
+  assertAdmin,
+  selfOrAdmin
+} = require('./auth.filters')
 
 module.exports = require('express').Router()
   .param('userId',
@@ -14,28 +19,49 @@ module.exports = require('express').Router()
         return next(err)
       } else {
         User.findById(userId)
-        .then(user => {
-          if (!user) {
-            res.sendStatus(404)
-          }
-          req.requestedUser = user
-          next()
-        })
-        .catch(next)
+          .then(user => {
+            if (!user) {
+              res.sendStatus(404)
+            }
+            req.requestedUser = user
+            next()
+          })
+          .catch(next)
       }
     })
   .get('/', assertAdmin,
     (req, res, next) =>
-      User.findAll()
-        .then(users => res.json(users))
-        .catch(next))
-  .post('/', assertAdmin,
-    (req, res, next) =>
-      User.create(req.body)
-      .then(user => {
-        res.status(201).send(user)
+    User.findAll()
+    .then(users => res.json(users))
+    .catch(next))
+  // .post('/', assertAdmin,
+  //   (req, res, next) => {
+  //     console.log('helloooo world')
+  //     return User.create(req.body)
+  //     .then(user => {
+  //       res.status(201).send(user)
+  //     })
+  //     .catch(next)
+  //   })
+  .post('/', (req, res, next) => {
+    User.findOrCreate({
+      where: {
+        email: req.body.email
+      },
+      defaults: {
+        password: req.body.password
+      }
+    })
+      .spread((user, created) => {
+        if (created) {
+          console.log('user created', user)
+          req.logIn(user, () => console.log('log in '))
+          res.sendStatus(201)
+        } else {
+          res.sendStatus(401)
+        }
       })
-      .catch(next))
+  })
   .get('/:userId', selfOrAdmin,
     (req, res, next) => {
       res.json(req.user)
@@ -44,8 +70,8 @@ module.exports = require('express').Router()
     (req, res, next) => {
       if (!req.requestedUser) res.sendStatus(404)
       req.requestedUser.update(req.body) // only admin should be able to set admin privileges -- KHLM
-      .then(updatedUser => {
-        res.json(updatedUser)
-      })
-      .catch(next)
+        .then(updatedUser => {
+          res.json(updatedUser)
+        })
+        .catch(next)
     })
