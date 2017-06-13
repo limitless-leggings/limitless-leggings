@@ -72,25 +72,32 @@ const orderItems = seed(OrderItem, ({orders, products}) => ({
 // if there are dependencies, the second param is a function that takes in the seeded object, so that you can use any of the previously made instances
 const products = seed(Product, ({categories}) => ({
   galaxy: {
-    title: 'galaxy',
+    title: 'Artist-Designed Galaxy Leggings',
     description: 'These are great galaxy leggings',
-    price: 100.02,
+    price: 49.99,
     photoUrl: 'http://tinyurl.com/y9qjuxjo',
-    category_id: categories.basic.id
+    category_id: categories.artistDesigned.id
   },
   snazzyworkout: {
-    title: 'snazzyworkout',
+    title: 'Sparkly Workout Leggings',
     description: 'These are great snazzy workout leggings',
-    price: 35.45,
+    price: 29.99,
     photoUrl: 'http://tinyurl.com/yd3j7jek',
     category_id: categories.athletic.id
   },
   plainblack: {
-    title: 'plainblack',
+    title: 'Cotton Basic Black Leggings',
     description: 'These are great basic, black leggings',
     price: 19.99,
     photoUrl: 'http://tinyurl.com/ybzapozl',
     category_id: categories.basic.id
+  },
+  mermaid: {
+    title: 'Mermaid Leggings',
+    description: 'Look like a mermaid in these leggings',
+    price: 49.99,
+    photoUrl: 'http://tinyurl.com/y7ohlpq7',
+    category_id: categories.artistDesigned.id
   }
 }))
 
@@ -144,39 +151,6 @@ const cartItems = seed(CartItem, ({users, productItems}) => ({
     user_id: users.god.id
   }
 }))
-
-// const favorites = seed(Favorite,
-//   // We're specifying a function here, rather than just a rows object.
-//   // Using a function lets us receive the previously-seeded rows (the seed
-//   // function does this wiring for us).
-//   //
-//   // This lets us reference previously-created rows in order to create the join
-//   // rows. We can reference them by the names we used above (which is why we used
-//   // Objects above, rather than just arrays).
-//   ({users, things}) => ({
-//     // The easiest way to seed associations seems to be to just create rows
-//     // in the join table.
-//     'obama loves surfing': {
-//       user_id: users.barack.id,    // users.barack is an instance of the User model
-//                                    // that we created in the user seed above.
-//                                    // The seed function wires the promises so that it'll
-//                                    // have been created already.
-//       thing_id: things.surfing.id  // Same thing for things.
-//     },
-//     'god is into smiting': {
-//       user_id: users.god.id,
-//       thing_id: things.smiting.id
-//     },
-//     'obama loves puppies': {
-//       user_id: users.barack.id,
-//       thing_id: things.puppies.id
-//     },
-//     'god loves puppies': {
-//       user_id: users.god.id,
-//       thing_id: things.puppies.id
-//     },
-//   })
-// )
 
 if (module === require.main) {
   db.didSync
