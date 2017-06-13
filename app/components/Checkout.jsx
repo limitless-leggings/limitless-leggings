@@ -7,10 +7,16 @@ import { buildNewOrder } from '../redux/cartItems'
 /* -----------------    COMPONENT     ------------------ */
 
 const Checkout = ({ createOrder, cart }) => {
-
   const handleSubmit = (event) => {
     event.preventDefault()
     createOrder(cart)
+  }
+
+  const calculateTotal = () => {
+    return cart.reduce((acc, item) => {
+      return acc + (item.productItem.product.price * item.quantity)
+    }, 0)
+
   }
 
   return (
@@ -30,13 +36,13 @@ const Checkout = ({ createOrder, cart }) => {
               return (
                 <tr key={cartItem.id}>
                   <td className="cart_description">
-                    <h4><a href="">{cartItem.productItem.product.title}</a></h4>
+                    <h4><a href="">{cartItem.productItem.product.title} - Size {cartItem.productItem.size}</a></h4>
                   </td>
                   <td className="cart_price">
-                    <p>{cartItem.productItem.product.price}</p>
+                    <p>${cartItem.productItem.product.price}</p>
                   </td>
                   <td className="cart_price">
-                    <p>{cartItem.productItem.product.quantity}</p>
+                    <p>{cartItem.quantity}</p>
                   </td>
                 </tr>)
             })
@@ -46,10 +52,10 @@ const Checkout = ({ createOrder, cart }) => {
       </table>
 
       <br></br>
-      <span>Total Product Price: </span>
+      <span>Total Product Price: ${calculateTotal()}</span>
       <hr />
       <form id='address-form' onSubmit={handleSubmit}>
-        <div className="row">
+        <div className="row center-block">
           <div className="col-lg-4">
             {/* Address part of form */}
             <h4>Shipping Information:</h4>
@@ -118,7 +124,7 @@ const Checkout = ({ createOrder, cart }) => {
     </form>
   </div>
   )
-  }
+}
 
 /* -----------------    CONTAINER     ------------------ */
 
@@ -129,4 +135,5 @@ const mapDispatch = dispatch => ({
     browserHistory.push('/completedorder')
   }
 })
+
 export default connect(mapState, mapDispatch)(Checkout)

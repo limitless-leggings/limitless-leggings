@@ -21,11 +21,11 @@ export const set = user => ({
 
 const reducer = (state = null, action) => {
   switch (action.type) {
-    case AUTHENTICATED:
-      return action.user
+  case AUTHENTICATED:
+    return action.user
 
-    case SET:
-      return action.user
+  case SET:
+    return action.user
   }
   return state
 }
