@@ -29,10 +29,7 @@ const Navbar = ({user, cart}) => {
               <Link to="/products" activeClassName="active">shop</Link>
             </li>
             <li>
-              <Link to="#" activeClassName="active">our company</Link>
-            </li>
-            <li>
-              <Link to="/login" activeClassName="active">login</Link>
+              <Link to="/about" activeClassName="active">our company</Link>
             </li>
             <li>
               <Link to="/signup" activeClassName="active">sign up</Link>

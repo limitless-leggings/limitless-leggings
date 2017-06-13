@@ -79,12 +79,13 @@ class SingleProduct extends Component {
       <div className="col-xs-10">
         <div>
           <div className="col-md-6 col-xs-10">
-            <h3>{selectedProduct.title}</h3>
             <img src={selectedProduct.photoUrl} className="img-thumbnail"/>
-            <p>{selectedProduct.description}</p>
           </div>
 
           <div className="col-md-4 col-xs-8 select-size-quantity">
+            <h2>{selectedProduct.title}</h2>
+            <p className="productdescription">{selectedProduct.description}</p>
+            <hr />
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select Size</ControlLabel>
               <FormControl onChange={updateSelectedSize} componentClass="select">

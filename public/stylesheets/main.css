@@ -13,10 +13,20 @@
 
 .logout {
   margin-left: 40px;
+  padding: 4px 8px;
+  border-radius: 16px;
+}
+
+.login-parts-navbar {
+  border-radius: 10px;
 }
 
 .loginform {
   position: relative;
   top: 10px;
   left: 10px;
+}
+
+.productdescription {
+  font-size: 125%;
 }

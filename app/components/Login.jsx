@@ -7,7 +7,7 @@ export const Login = ({ login }) => (
   } }>
     <input className="login-parts-navbar" name="username" />
     <input className="login-parts-navbar" name="password" type="password" />
-    <input className="login-parts-navbar btn btn-sm btn-success" type="submit" value="Login" />
+    <input className="login-parts-navbar btn btn-sm btn-warning login" type="submit" value="Login" />
   </form>
 )
 
