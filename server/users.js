@@ -54,8 +54,7 @@ module.exports = require('express').Router()
     })
       .spread((user, created) => {
         if (created) {
-          console.log('user created', user)
-          req.logIn(user, () => console.log('log in '))
+          req.logIn(user, () => {})
           res.sendStatus(201)
         } else {
           res.sendStatus(401)

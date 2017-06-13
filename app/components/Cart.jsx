@@ -11,7 +11,6 @@ class Cart extends React.Component {
     this.state = {
       cartItems: {}
     }
-    // set total price as part of the state
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -30,18 +29,18 @@ class Cart extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           {
-            cart[0]
+            cart.length
             ? cart.map(cartItem => {
               const bindedHandleChange = this.handleChange.bind(this, cartItem.id)
               return (
                 <div className="form-inline" key={cartItem.id}>
-                  <h4><Link to={`/products/${cartItem.id}`}>{cartItem.productItem.product.title} - size {cartItem.productItem.size}</Link></h4>
+                  <h4><Link to={`/products/${cartItem.id}`}>{cartItem.productItem && cartItem.productItem.product.title} - size {cartItem.productItem.size}</Link></h4>
                   <p>$ {cartItem.productItem.product.price}</p>
                   <input placeholder={cartItem.quantity} onChange={bindedHandleChange} value={this.state[cartItem.id]}></input>
                 </div>
               )
             })
-            : <div></div>
+            : <h2>Your Cart is Empty!</h2>
           }
           <button type='submit' value='submit' className="btn btn-info btn-sm">Update Cart</button>
         </form>
@@ -71,6 +70,6 @@ class Cart extends React.Component {
 
 const mapStateToProps = ({ cart }) => ({ cart })
 
-const mapDispatchToProps ={ updateQty }
+const mapDispatchToProps = { updateQty }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

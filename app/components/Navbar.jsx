@@ -7,7 +7,7 @@ import WhoAmI from './WhoAmI'
 
 /* -----------------    COMPONENT     ------------------ */
 
-const Navbar = ({user}) => {
+const Navbar = ({user, cart}) => {
   return (
     <nav className="navbar navbar-default">
       <div className="container">
@@ -38,10 +38,12 @@ const Navbar = ({user}) => {
               <Link to="/signup" activeClassName="active">sign up</Link>
             </li>
             <li>
-              <Link to="/cart" activeClassName="active">your cart</Link>
+              <Link to="/cart" activeClassName="active">your cart ({cart.length} {cart.length === 1 ? 'item' : 'items'})</Link>
             </li>
           </ul>
-          {user ? <WhoAmI/> : <Login/>}
+          <div className="login-navbar">
+            {user ? <WhoAmI/> : <Login/>}
+          </div>
         </div>
       </div>
     </nav>
@@ -50,6 +52,6 @@ const Navbar = ({user}) => {
 
 /* -----------------    CONTAINER     ------------------ */
 
-const mapStateToProps = ({auth}) => ({user: auth})
+const mapStateToProps = ({auth, cart}) => ({user: auth, cart})
 
 export default connect(mapStateToProps)(Navbar)

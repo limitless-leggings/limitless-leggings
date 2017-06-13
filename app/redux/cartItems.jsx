@@ -13,9 +13,6 @@ const UPDATE = 'UPDATE_QUANTITY'
 const init = cartItems => ({ type: INITIALIZE, cartItems })
 const add = cartItem => ({ type: ADD, cartItem })
 const update = updatedValues => ({ type: UPDATE, updatedValues })
-// const create_order =  order  => ({ type: CREATE_ORDER, order });
-// const remove = id      => ({ type: REMOVE, id });
-// const update = story   => ({ type: UPDATE, story });
 
 /* ------------       REDUCERS     ------------------ */
 
@@ -24,28 +21,8 @@ export default function reducer(cartItems = [], action) {
   case INITIALIZE:
     return action.cartItems
 
-  // case REMOVE:
-  //   return stories.filter(story => story.id !== action.id);
-
   case ADD:
-    return [cartItems, ...action.cartItem]
-
-  // case CREATE_ORDER:
-  //   return action.order
-
-  // case UPDATE:
-  //   console.log('~!~!~!~!CART ITEMS', action.updatedValues)
-  //   return Object.assign({}, action.updatedValues)
-      // return cartItems.map(cartitem => (
-      //   action.cartItems.id === .id ? action.story :
-      // ))
-
-    // case REMOVE_USER:
-    //   return stories.filter(story => story.author_id !== action.id);
-
-    //   return stories.map(story => (
-    //     action.story.id === story.id ? action.story : story
-    //   ));
+    return [action.cartItem, ...cartItems]
 
   default:
     return cartItems
@@ -71,7 +48,6 @@ export const addCartItem = (cartItem) => dispatch => {
 }
 
 export const updateQty = (updatedValues) => dispatch => {
-  console.log('updatedValue', updatedValues)
   const promisesArr= []
   for (var key in updatedValues) {
     const temp = {}
@@ -89,9 +65,7 @@ export const updateQty = (updatedValues) => dispatch => {
 export const buildNewOrder = (cartItemArray) => dispatch => {
   axios.post('/api/cart/order')
     .then(res => {
-      console.log("RES.DATA: ", res.data)
-      //dispatch(create_order(res.data)) // dispatch the action that clears the cart
+      //
     })
     .catch(err => console.error('Order build unsuccessful', err))
 }
-

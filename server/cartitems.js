@@ -73,31 +73,30 @@ module.exports = require('express').Router()
     })
       // .then(item => item.update(req.body))
     .then(item => {
-      console.log('itemmmmm', item.dataValues)
       res.status(201).send(item.dataValues)
     })
     .catch(next)
   })
 
-  //route for checkout -- posting new Order object with current order items, and then clearing cart
+  // route for checkout -- posting new Order object with current order items, and then clearing cart
   .post('/order', (req, res, next) => {
-    let createdOrder, foundCartItems;
-    Order.create({ //first, create the Order object
+    let createdOrder, foundCartItems
+    Order.create({ // first, create the Order object
       user_id: req.user.id
     })
-      .then(_createdOrder => { //then, find the cart items belonging to the user
-        createdOrder = _createdOrder;
+      .then(_createdOrder => { // then, find the cart items belonging to the user
+        createdOrder = _createdOrder
         return CartItem.findAll({
           where: {
             user_id: req.user.id
           },
           include: [{
-            model: ProductItem //import this above instead of Product
+            model: ProductItem // import this above instead of Product
           }]
         })
       })
-      .then(_foundCartItems => { //then, turn those found cart items into order items
-        foundCartItems = _foundCartItems;
+      .then(_foundCartItems => { // then, turn those found cart items into order items
+        foundCartItems = _foundCartItems
         let arrOfCreatingItems = foundCartItems.map(cartItem => { // an array of promises
           return OrderItem.create({
             order_id: createdOrder.id,
@@ -105,16 +104,16 @@ module.exports = require('express').Router()
             // priceAtOrder:
           })
         });
-        return Promise.all(arrOfCreatingItems);
+        return Promise.all(arrOfCreatingItems)
       })
-      .then(createdOrderItems => { //now, delete the cart items (NEED TO TEST THIS)
+      .then(createdOrderItems => { // now, delete the cart items (NEED TO TEST THIS)
         let arrOfDestroyingItems = foundCartItems.map(cartItem => {
-          cartItem.destroy();
+          cartItem.destroy()
         })
-        return Promise.all(arrOfDestroyingItems);
+        return Promise.all(arrOfDestroyingItems)
       })
       .then(createdOrderItems => {
-        res.sendStatus(201);
+        res.sendStatus(201)
       })
   .catch(next)
-})
+  })

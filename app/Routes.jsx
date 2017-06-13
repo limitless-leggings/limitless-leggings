@@ -42,6 +42,7 @@ const mapDispatch = dispatch => ({
   fetchInitialData: () => {
     dispatch(fetchProducts())
     dispatch(fetchCategories())
+    dispatch(fetchCartItems())
   },
   onProductEnter: (nextRouterState) => {
     const productId = nextRouterState.params.productId
@@ -50,13 +51,7 @@ const mapDispatch = dispatch => ({
   onCategoryEnter: (nextRouterState) => {
     const categoryId = nextRouterState.params.categoryId
     dispatch(fetchProductsByCategoryId(categoryId))
-  },
-  onCartEnter: () => {
-    dispatch(fetchCartItems())
-  },
-  // onCheckoutEnter: () => {
-
-  // }
+  }
 })
 
 export default connect(mapProps, mapDispatch)(Routes)

@@ -97,8 +97,8 @@ class SingleProduct extends Component {
               <ControlLabel>Select Quantity</ControlLabel>
               <FormControl onChange={updateSelectedQuantity} componentClass="select">
                 <option>Select a quantity</option>
-                {createQuantityArrayFromSize(selectedSize).map((quantity) => (
-                  <option key={quantity.toString()} value={quantity}>{quantity}</option>
+                {createQuantityArrayFromSize(selectedSize).map((quantity, idx) => (
+                  <option key={idx} value={quantity}>{quantity}</option>
                 ))}
               </FormControl>
             </FormGroup>
