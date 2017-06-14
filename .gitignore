@@ -12,5 +12,8 @@ public/bundle.js.map
 npm-debug.log
 
 # Sophia's notes
-QUESTIONS.md 
-SOPHIANOTES.md 
+QUESTIONS.md
+SOPHIANOTES.md
+
+# oauth thing
+.$limitless-legging.env.json
