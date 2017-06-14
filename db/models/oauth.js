@@ -27,7 +27,8 @@ module.exports = db => {
   })
 
   // OAuth.V2 is a default argument for the OAuth.setupStrategy method - it's our callback function that will execute when the user has successfully logged in
-  OAuth.V2 = (accessToken, refreshToken, profile, done) =>
+  OAuth.V2 = (accessToken, refreshToken, profile, done) =>{
+    console.log('hellloo come here verification callback')
     OAuth.findOrCreate({
       where: {
         provider: profile.provider,
@@ -64,7 +65,7 @@ module.exports = db => {
     )
     .then(user => done(null, user))
     .catch(done)
-
+  }
   // setupStrategy is a wrapper around passport.use, and is called in authentication routes in server/auth.js
   OAuth.setupStrategy =
   ({

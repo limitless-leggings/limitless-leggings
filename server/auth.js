@@ -1,6 +1,7 @@
 const app = require('APP'), {env} = app
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
+// const googlepass = require('APP/.$limitless-leggings.env.json')
 
 const {User, OAuth} = require('APP/db')
 const auth = require('express').Router()
@@ -44,15 +45,19 @@ OAuth.setupStrategy({
   passport
 })
 
+
+// "GOOGLE_CLIENT_ID": "485624447405-nopmtsnjsa3gb1s556qfktj4lh0eh8sg.apps.googleusercontent.com",
+//   "GOOGLE_CLIENT_SECRET": "OMJQbQJvX3PWhdjxC3naOQbD"
+// }
 // Google needs the GOOGLE_CLIENT_SECRET AND GOOGLE_CLIENT_ID
 // environment variables.
 OAuth.setupStrategy({
   provider: 'google',
   strategy: require('passport-google-oauth').OAuth2Strategy,
   config: {
-    clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/login/google`,
+    clientID: "485624447405-nopmtsnjsa3gb1s556qfktj4lh0eh8sg.apps.googleusercontent.com",
+    clientSecret: "OMJQbQJvX3PWhdjxC3naOQbD",
+    callbackURL: `${app.baseUrl}/api/auth/verify/google`,
   },
   passport
 })
@@ -138,10 +143,15 @@ auth.get('/login/:strategy', (req, res, next) =>
     // Specify other config here
   })(req, res, next)
 )
+auth.get('/verify/:strategy', (req, res, next)=>{console.log('!!!!!!!', req.query); next()}, (req, res, next) =>
+  passport.authenticate(req.params.strategy, {
+    successRedirect: '/'
+  })(req, res, next)
+)
 
 auth.post('/logout', (req, res) => {
   req.logout()
   res.redirect('/api/auth/whoami')
 })
-
+console.log('8888888', process.env.GOOGLE_CLIENT_SECRET)
 module.exports = auth
