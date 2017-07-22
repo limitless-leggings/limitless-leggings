@@ -42,7 +42,6 @@ export const fetchCartItems = () => dispatch => {
 export const addCartItem = (cartItem) => dispatch => {
   return axios.post('/api/cart/', cartItem)
     .then(res => {
-      console.log('&&&&&', res.data)
       return dispatch(add(res.data))
     })
     .catch(err => console.error('Addding cartItem unsuccessful', err))

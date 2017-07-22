@@ -3,10 +3,10 @@ import React from 'react'
 export const Login = ({ login }) => (
   <form className="loginform" onSubmit={evt => {
     evt.preventDefault()
-    login(evt.target.username.value, evt.target.password.value) // we'll do this again at the end of signup
+    login(evt.target.username.value, evt.target.password.value)
   } }>
-    <input className="login-parts-navbar" name="username" />
-    <input className="login-parts-navbar" name="password" type="password" />
+    <input className="login-parts-navbar" name="username" placeholder="demo@example.com"/>
+    <input className="login-parts-navbar" name="password" type="password" placeholder="1234"/>
     <input className="login-parts-navbar btn btn-sm btn-warning login" type="submit" value="Login" />
   </form>
 )

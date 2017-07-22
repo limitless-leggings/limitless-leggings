@@ -34,15 +34,6 @@ module.exports = require('express').Router()
     User.findAll()
     .then(users => res.json(users))
     .catch(next))
-  // .post('/', assertAdmin,
-  //   (req, res, next) => {
-  //     console.log('helloooo world')
-  //     return User.create(req.body)
-  //     .then(user => {
-  //       res.status(201).send(user)
-  //     })
-  //     .catch(next)
-  //   })
   .post('/', (req, res, next) => {
     User.findOrCreate({
       where: {

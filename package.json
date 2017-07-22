@@ -1,10 +1,10 @@
 {
   "name": "limitless-leggings",
-  "version": "0.0.1",
-  "description": "A happy little skeleton.",
+  "version": "1.0.0",
+  "description": "An awesome leggings ecommerce site",
   "main": "index.js",
   "engines": {
-    "node": ">= 7.0.0"
+    "node": "8.1.4"
   },
   "scripts": {
     "dev": "node dev",

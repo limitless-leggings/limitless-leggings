@@ -56,7 +56,7 @@ const Checkout = ({ createOrder, cart }) => {
       <hr />
       <form id='address-form' onSubmit={handleSubmit}>
         <div className="row center-block">
-          <div className="col-lg-4">
+          <div className="col-md-4">
             {/* Address part of form */}
             <h4>Shipping Information:</h4>
             <br />
@@ -82,7 +82,7 @@ const Checkout = ({ createOrder, cart }) => {
             </div>
             <br />
           </div>
-          <div className="col-lg-4">
+          <div className="col-md-4">
             {/* Payment part of form */}
             <h4>Payment Information</h4>
             <br />
@@ -104,7 +104,7 @@ const Checkout = ({ createOrder, cart }) => {
             </div>
             <br />
           </div>
-        <div className="col-lg-4">
+        <div className="col-md-4">
           {/* Email part of form */}
           <h4>Email for Confirmation</h4>
           <br />
@@ -115,9 +115,9 @@ const Checkout = ({ createOrder, cart }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-lg-12">
+        <div className="col-md-12">
         <center>
-          <button type='submit'>Submit Order</button>
+          <button className="btn btn-success" type='submit'>Submit Order</button>
         </center>
         </div>
       </div>

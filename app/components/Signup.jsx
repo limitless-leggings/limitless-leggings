@@ -13,7 +13,7 @@ class Signup extends React.Component {
   render() {
     const { message } = this.props
     return (
-      <div className="signin-container">
+      <div className="signin-container col-xs-8 col-xs-offset-2 col-sm-4 col-md-offset-4">
         <div className="buffer local">
           <form onSubmit={this.onSignupSubmit}>
             <div className="form-group">
@@ -38,19 +38,20 @@ class Signup extends React.Component {
           </form>
         </div>
         <div className="or buffer">
-          <div className="back-line">
-            <span>OR</span>
+          <div className="back-line text-center">
+            <h3>OR</h3>
           </div>
         </div>
 
         <div className="buffer oauth">
-          <p>
+          <p className="text-center">
             <a
               target="_self"
-              href="/api/auth/login/google"
-              className="btn btn-social btn-google">
+              href="/api/auth/login/google">
               <i className="fa fa-google" />
-              <span>{message} with Google</span>
+                <button className="btn btn-block btn-primary btn-social btn-google">
+                  {message} with Google
+                </button>
             </a>
           </p>
         </div>
@@ -64,7 +65,6 @@ class Signup extends React.Component {
       email: event.target.email.value,
       password: event.target.password.value
     }
-    console.log('credentials', credentials)
     this.props.signup(credentials)
   }
 }
@@ -74,13 +74,5 @@ class Signup extends React.Component {
 const mapState = () => ({ message: 'Sign up' })
 
 const mapDispatch = { signup }
-// // equivalent to:
-// const mapDispatch = (dispatch) => {
-//   return {
-//     signup: function (credentials) {
-//       dispatch(signupAndGoToUser(credentials));
-//     }
-//   };
-// };
 
 export default connect(mapState, mapDispatch)(Signup)

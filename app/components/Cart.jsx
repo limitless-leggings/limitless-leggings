@@ -7,11 +7,9 @@ import { updateQty } from '../redux/cartItems'
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       cartItems: {}
     }
-
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -75,7 +73,9 @@ class Cart extends React.Component {
         </div>
         <br></br>
         <div className="col-md-offset-1">
-          <button><Link to="/checkout">Checkout</Link></button>
+          <Link to="/checkout">
+            <button className="btn btn-primary">Checkout</button>
+          </Link>
         </div>
       </div>
     )

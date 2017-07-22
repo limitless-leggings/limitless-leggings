@@ -143,7 +143,7 @@ auth.get('/login/:strategy', (req, res, next) =>
     // Specify other config here
   })(req, res, next)
 )
-auth.get('/verify/:strategy', (req, res, next)=>{console.log('!!!!!!!', req.query); next()}, (req, res, next) =>
+auth.get('/verify/:strategy', (req, res, next) => { next() }, (req, res, next) =>
   passport.authenticate(req.params.strategy, {
     successRedirect: '/'
   })(req, res, next)
@@ -153,5 +153,5 @@ auth.post('/logout', (req, res) => {
   req.logout()
   res.redirect('/api/auth/whoami')
 })
-console.log('8888888', process.env.GOOGLE_CLIENT_SECRET)
+
 module.exports = auth
